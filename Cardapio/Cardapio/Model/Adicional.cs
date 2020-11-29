@@ -3,10 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CardapioService.Model
 {
-    [Table("Cardapio")]
-    public class Cardapio : BaseEntity
+
+    [Table("Adicional")]
+    public class Adicional : BaseEntity
     {
         public string Nome { get; set; }
-        //public List<ItemCardapio> ItensCardapio { get; set; }
+        public List<TipoAdicional> TiposAdicionais { get; set; }
     }
 }

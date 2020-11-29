@@ -1,6 +1,5 @@
 ﻿using CardapioService.Data;
 using CardapioService.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,7 +9,7 @@ using System.Linq;
 namespace CardapioService.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("cardapio")]
     public class CardapioController : ControllerBase
     {
 
