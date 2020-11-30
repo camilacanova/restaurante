@@ -45,8 +45,6 @@ namespace CardapioService.Controllers
                 _logger.LogTrace(ex.Message);
                 return BadRequest();
             }
-
-
         }
 
         [HttpGet]

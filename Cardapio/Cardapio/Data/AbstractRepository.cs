@@ -1,4 +1,5 @@
 ﻿using CardapioService.Model;
+using CardapioService.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,19 @@ namespace CardapioService.Data
     public class AbstractRepository<T> : IRepository<T> where T : BaseEntity
     {
         public CardapioServiceContext context  { get; set; }
+        public AbstractRepository(CardapioServiceContext context)
+        {
+            this.context = context;
+        }
         
-        public T Create(T entity)
+        public virtual Result<T> Create(T entity)
         {
             try
             {
                 context.Add(entity);
                 context.SaveChanges();
-                return entity;
+                Result<T> result = new Result<T>(true, entity);
+                return result;
             }
             catch (Exception ex)
             {
@@ -24,19 +30,66 @@ namespace CardapioService.Data
             }
         }
 
-        public bool Delete(int entityId)
+        public virtual Result<T> Delete(int entityId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                T item = context.Set<T>().SingleOrDefault(c => c.Id == entityId);
+                context.Remove(item);
+                context.SaveChanges();
+                Result<T> result = new Result<T>(true, item);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public List<T> Read(T entity)
+        public virtual Result<T> Read(int entityId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                T item = context.Set<T>().SingleOrDefault(c => c.Id == entityId);
+                Result<T> result = new Result<T>(true, item);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
-        public T Update(T entity)
+        public virtual Result<T>  ReadAll(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<T> itens = context.Set<T>().OrderBy(x => x.Id).ToList();
+                Result<T> result = new Result<T>(true, itens);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public virtual Result<T> Update(T entity)
+        {
+            try
+            {
+                context.Add(entity);
+                context.SaveChanges();
+                Result<T> result = new Result<T>(true, entity);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }

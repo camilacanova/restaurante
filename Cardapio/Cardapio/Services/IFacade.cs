@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CardapioService.Data
+namespace CardapioService.Services
 {
-    public interface IRepository<T>
+    public interface IFacade<T>
         where T : BaseEntity
     {
         Result<T> Create(T entity);
