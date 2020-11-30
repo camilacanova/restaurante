@@ -8,6 +8,11 @@ namespace CardapioService.Model
     {
         public string NomeItem { get; set; }
         public List<Adicional> AdicionaisItem { get; set; }
+
+        public int CategoriaId { get; set; }
         public Categoria CategoriaItem { get; set; }
+
+        public int CardapioId { get; set; }
+        public Cardapio Cardapio { get; set; }
     }
 }

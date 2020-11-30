@@ -9,5 +9,8 @@ namespace CardapioService.Model
     {
         public string Nome { get; set; }
         public List<TipoAdicional> TiposAdicionais { get; set; }
+
+        public int ItemCardapioId { get; set; }
+        public ItemCardapio ItemCardapio { get; set; }
     }
 }
