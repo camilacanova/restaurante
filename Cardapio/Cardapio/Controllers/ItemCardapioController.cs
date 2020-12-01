@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CardapioService.Data;
 using CardapioService.Model;
+using CardapioService.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,9 +15,11 @@ namespace CardapioService.Controllers
     {
         private readonly CardapioServiceContext context;
         private readonly ILogger<ItemCardapioController> _logger;
+        private ItemCardapioFacade facade;
 
         public ItemCardapioController(CardapioServiceContext context, ILogger<ItemCardapioController> logger)
         {
+            facade = new ItemCardapioFacade(context);
             this.context = context;
             _logger = logger;
         }
@@ -28,15 +31,10 @@ namespace CardapioService.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
+                var result = facade.Create(itemCardapio);
+                if (result.Success)
+                    return CreatedAtAction("CreateCardapio", new { Id = result.Entities[0].Id });
 
-                    context.Add(itemCardapio);
-                    context.SaveChanges();
-
-
-                    return CreatedAtAction("CreateItemCardapio", new { Id = itemCardapio.Id });
-                }
                 return BadRequest();
             }
             catch (Exception ex)
@@ -52,8 +50,8 @@ namespace CardapioService.Controllers
         {
             try
             {
-                ItemCardapio itemCardapio = context.Set<ItemCardapio>().SingleOrDefault(c => c.Id == idItemCardapio);
-                return CreatedAtAction("ReadItemCardapio", new { itemCardapio });
+                var result = facade.Read(idItemCardapio);
+                return CreatedAtAction("ReadCardapio", new { result.Entities });
             }
             catch (Exception ex)
             {
@@ -68,8 +66,8 @@ namespace CardapioService.Controllers
         {
             try
             {
-                List<ItemCardapio> itensCardapio = context.Set<ItemCardapio>().OrderBy(x => x.Id).ToList();
-                return CreatedAtAction("ReadAllItemCardapio", new { itensCardapio });
+                var result = facade.ReadAll(new ItemCardapio());
+                return CreatedAtAction("ReadAllCardapio", new { result.Entities });
             }
             catch (Exception ex)
             {
@@ -84,30 +82,9 @@ namespace CardapioService.Controllers
         {
             try
             {
-                if (ModelState.IsValid && itemCardapio.Id != 0)
-                {
-                    ItemCardapio itemCardapioUpdate = context.Set<ItemCardapio>().SingleOrDefault(c => c.Id == itemCardapio.Id);
-
-                    if (itemCardapioUpdate != null)
-                    {
-                        itemCardapioUpdate.NomeItem = itemCardapio.NomeItem;
-                        itemCardapioUpdate.AdicionaisItem = itemCardapio.AdicionaisItem;
-                        itemCardapioUpdate.CategoriaItem = itemCardapio.CategoriaItem;
-                        itemCardapioUpdate.Observacao = itemCardapio.Observacao;
-
-                        context.SaveChanges();
-
-                        return CreatedAtAction("UpdateItemCardapio", itemCardapioUpdate);
-                    }
-                    else
-                    {
-                        context.Add(itemCardapio);
-                        context.SaveChanges();
-
-
-                        return CreatedAtAction("UpdateItemCardapio", new { Id = itemCardapio.Id });
-                    }
-                }
+                var result = facade.Update(itemCardapio);
+                if (result.Success)
+                    return CreatedAtAction("UpdateCardapio", result.Entities[0]);
 
                 return BadRequest();
             }
@@ -124,12 +101,10 @@ namespace CardapioService.Controllers
         {
             try
             {
-                ItemCardapio itemCardapioDelete = context.Set<ItemCardapio>().SingleOrDefault(c => c.Id == idItemCardapio);
-                context.Remove(itemCardapioDelete);
-
-                context.SaveChanges();
-                return CreatedAtAction("DeleteItemCardapio", "Item Cardápio removido");
-
+                var result = facade.Delete(idItemCardapio);
+                if (result.Success)
+                    return CreatedAtAction("DeleteItemCardapio", "Item Cardápio removido");
+                return BadRequest();
             }
             catch (Exception ex)
             {

@@ -17,7 +17,7 @@ namespace CardapioService.Services
     {
         public IFactory<T> Factory { get; set; }
 
-        private FactoryResponse<T> factoryResponse;
+        protected FactoryResponse<T> factoryResponse;
 
         public DefaultFacade(IFactory<T> factory)
         {
@@ -25,7 +25,7 @@ namespace CardapioService.Services
             factoryResponse = Factory.create();
         }
 
-        public Result<T> Execute(EnumCommand command, T entity)
+        private Result<T> Execute(EnumCommand command, T entity)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace CardapioService.Services
             }
         }
 
-        public Result<T> Create(T entity)
+        public virtual Result<T> Create(T entity)
         {
             var result = Execute(EnumCommand.CREATE, entity);
             if (result.Success)
@@ -63,7 +63,7 @@ namespace CardapioService.Services
             return result;
         }
 
-        public Result<T> ReadAll(T entity)
+        public virtual Result<T> ReadAll(T entity)
         {
             var result = Execute(EnumCommand.READ, entity);
             if (result.Success)
@@ -71,7 +71,7 @@ namespace CardapioService.Services
             return result;
         }
 
-        public Result<T> Read(int entityId)
+        public virtual Result<T> Read(int entityId)
         {
             T entity = (T)(new BaseEntity() { Id = entityId });
             var result = Execute(EnumCommand.READ, entity);
@@ -80,7 +80,7 @@ namespace CardapioService.Services
             return result;
         }
 
-        public Result<T> Update(T entity)
+        public virtual Result<T> Update(T entity)
         {
             var result = Execute(EnumCommand.UPDATE, entity);
             if (result.Success)
@@ -88,7 +88,7 @@ namespace CardapioService.Services
             return result;
         }
 
-        public Result<T> Delete(int entityId)
+        public virtual Result<T> Delete(int entityId)
         {
             T entity = (T)(new BaseEntity() { Id = entityId });
             var result = Execute(EnumCommand.DELETE, entity);

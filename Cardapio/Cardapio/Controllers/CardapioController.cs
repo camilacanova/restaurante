@@ -1,5 +1,6 @@
 ﻿using CardapioService.Data;
 using CardapioService.Model;
+using CardapioService.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -15,9 +16,11 @@ namespace CardapioService.Controllers
 
         private readonly CardapioServiceContext context;
         private readonly ILogger<CardapioController> _logger;
+        private CardapioFacade facade;
 
         public CardapioController(CardapioServiceContext context, ILogger<CardapioController> logger)
         {
+            facade = new CardapioFacade(context);
             this.context = context;
             _logger = logger;
         }
@@ -29,16 +32,11 @@ namespace CardapioService.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
+                var result = facade.Create(cardapio);
+                if (result.Success)
+                    return CreatedAtAction("CreateCardapio", new { Id = result.Entities[0].Id });
 
-                    context.Add(cardapio);
-                    context.SaveChanges();
-
-
-                    return CreatedAtAction("CreateCardapio", new { Id = cardapio.Id });
-                }
-                return BadRequest();
+                return BadRequest(result.Messages);
             }
             catch (Exception ex)
             {
@@ -53,8 +51,8 @@ namespace CardapioService.Controllers
         {
             try
             {
-                Cardapio cardapio = context.Set<Cardapio>().SingleOrDefault(c => c.Id == idCardapio);
-                return CreatedAtAction("ReadCardapio", new { cardapio });
+                var result = facade.Read(idCardapio);
+                return CreatedAtAction("ReadCardapio", new { result.Entities });
             }
             catch (Exception ex)
             {
@@ -69,8 +67,8 @@ namespace CardapioService.Controllers
         {
             try
             {
-                List<Cardapio> cardapios = context.Set<Cardapio>().OrderBy(x => x.Id).ToList();
-                return CreatedAtAction("ReadAllCardapio", new { cardapios });
+                var result = facade.ReadAll(new Cardapio());
+                return CreatedAtAction("ReadAllCardapio", new { result.Entities });
             }
             catch (Exception ex)
             {
@@ -85,28 +83,10 @@ namespace CardapioService.Controllers
         {
             try
             {
-                if (ModelState.IsValid && cardapio.Id != 0)
-                {
-                    Cardapio cardapioUpdate = context.Set<Cardapio>().SingleOrDefault(c => c.Id == cardapio.Id);
 
-                    if (cardapioUpdate != null)
-                    {
-                        cardapioUpdate.Nome = cardapio.Nome;
-                        cardapioUpdate.Observacao = cardapio.Observacao;
-
-                        context.SaveChanges();
-
-                        return CreatedAtAction("UpdateCardapio", cardapioUpdate);
-                    }
-                    else
-                    {
-                        context.Add(cardapio);
-                        context.SaveChanges();
-
-
-                        return CreatedAtAction("UpdateCardapio", new { Id = cardapio.Id });
-                    }
-                }
+                var result = facade.Update(cardapio);
+                if (result.Success)
+                    return CreatedAtAction("UpdateCardapio", result.Entities[0]);
 
                 return BadRequest();
             }
@@ -123,11 +103,11 @@ namespace CardapioService.Controllers
         {
             try
             {
-                Cardapio cardapioDelete = context.Set<Cardapio>().SingleOrDefault(c => c.Id == idCardapio);
-                context.Remove(cardapioDelete);
+                var result = facade.Delete(idCardapio);
+                if (result.Success)
+                    return CreatedAtAction("DeleteCardapio", "Cardápio removido");
 
-                context.SaveChanges();
-                return CreatedAtAction("DeleteCardapio", "Cardápio removido");
+                return BadRequest();
 
             }
             catch (Exception ex)
