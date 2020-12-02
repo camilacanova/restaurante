@@ -19,8 +19,4 @@
     <PackageReference Include="SpecFlow.MsTest" Version="3.5.5" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Cardapio\CardapioService.csproj" />
-  </ItemGroup>
-
 </Project>
