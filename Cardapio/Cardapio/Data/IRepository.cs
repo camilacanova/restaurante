@@ -14,6 +14,6 @@ namespace CardapioService.Data
         Result<T> ReadAll(T entity);
         Result<T> Read(T entity);
         Result<T> Update(T entity);
-        Result<T> Delete(int entityId);
+        Result<T> Delete(T entity);
     }
 }

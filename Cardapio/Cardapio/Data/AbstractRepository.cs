@@ -30,11 +30,12 @@ namespace CardapioService.Data
             }
         }
 
-        public virtual Result<T> Delete(int entityId)
+        public virtual Result<T> Delete(T entity)
         {
             try
             {
-                T item = context.Set<T>().SingleOrDefault(c => c.Id == entityId);
+                T item = context.Set<T>().SingleOrDefault(c => c.Id == entity.Id);
+
                 context.Remove(item);
                 context.SaveChanges();
                 Result<T> result = new Result<T>(true, item);

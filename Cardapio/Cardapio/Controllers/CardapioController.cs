@@ -103,7 +103,7 @@ namespace CardapioService.Controllers
         {
             try
             {
-                var result = facade.Delete(idCardapio);
+                var result = facade.Delete(new Cardapio() { Id = idCardapio });
                 if (result.Success)
                     return CreatedAtAction("DeleteCardapio", "Cardápio removido");
 

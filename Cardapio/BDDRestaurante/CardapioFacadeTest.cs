@@ -79,7 +79,7 @@ namespace BDDRestaurante
             CardapioFacade cardapioFacade = new CardapioFacade(dbContext);
 
 
-            Result<Cardapio> result = cardapioFacade.Delete(3);
+            Result<Cardapio> result = cardapioFacade.Delete(new Cardapio() { Id = 3 });
         }
     }
 }

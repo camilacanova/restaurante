@@ -101,7 +101,7 @@ namespace CardapioService.Controllers
         {
             try
             {
-                var result = facade.Delete(idItemCardapio);
+                var result = facade.Delete(new ItemCardapio() { Id = idItemCardapio });
                 if (result.Success)
                     return CreatedAtAction("DeleteItemCardapio", "Item Cardápio removido");
                 return BadRequest();

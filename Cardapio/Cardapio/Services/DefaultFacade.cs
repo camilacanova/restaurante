@@ -88,12 +88,11 @@ namespace CardapioService.Services
             return result;
         }
 
-        public virtual Result<T> Delete(int entityId)
+        public virtual Result<T> Delete(T entity)
         {
-            T entity = (T)(new BaseEntity() { Id = entityId });
             var result = Execute(EnumCommand.DELETE, entity);
             if (result.Success)
-                return factoryResponse.Repository.Delete(entityId);
+                return factoryResponse.Repository.Delete(entity);
             return result;
         }
     }
