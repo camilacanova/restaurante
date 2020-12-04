@@ -8,6 +8,21 @@ namespace CardapioService.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Cardapio",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nome = table.Column<string>(type: "text", nullable: true),
+                    Ativo = table.Column<bool>(type: "boolean", nullable: false),
+                    Observacao = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cardapio", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Categoria",
                 columns: table => new
                 {
@@ -38,35 +53,13 @@ namespace CardapioService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cardapio",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nome = table.Column<string>(type: "text", nullable: true),
-                    RestauranteId = table.Column<int>(type: "integer", nullable: false),
-                    Ativo = table.Column<bool>(type: "boolean", nullable: false),
-                    Observacao = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cardapio", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cardapio_Restaurante_RestauranteId",
-                        column: x => x.RestauranteId,
-                        principalTable: "Restaurante",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ItemCardapio",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     NomeItem = table.Column<string>(type: "text", nullable: true),
-                    CategoriaId = table.Column<int>(type: "integer", nullable: false),
+                    Valor = table.Column<decimal>(type: "numeric", nullable: false),
                     CardapioId = table.Column<int>(type: "integer", nullable: false),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false),
                     Observacao = table.Column<string>(type: "text", nullable: true)
@@ -78,12 +71,6 @@ namespace CardapioService.Migrations
                         name: "FK_ItemCardapio_Cardapio_CardapioId",
                         column: x => x.CardapioId,
                         principalTable: "Cardapio",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ItemCardapio_Categoria_CategoriaId",
-                        column: x => x.CategoriaId,
-                        principalTable: "Categoria",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -138,20 +125,9 @@ namespace CardapioService.Migrations
                 column: "ItemCardapioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cardapio_RestauranteId",
-                table: "Cardapio",
-                column: "RestauranteId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ItemCardapio_CardapioId",
                 table: "ItemCardapio",
                 column: "CardapioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ItemCardapio_CategoriaId",
-                table: "ItemCardapio",
-                column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TipoAdicional_AdicionalId",
@@ -161,6 +137,12 @@ namespace CardapioService.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Categoria");
+
+            migrationBuilder.DropTable(
+                name: "Restaurante");
+
             migrationBuilder.DropTable(
                 name: "TipoAdicional");
 
@@ -172,12 +154,6 @@ namespace CardapioService.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cardapio");
-
-            migrationBuilder.DropTable(
-                name: "Categoria");
-
-            migrationBuilder.DropTable(
-                name: "Restaurante");
         }
     }
 }

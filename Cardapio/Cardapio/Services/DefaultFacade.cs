@@ -84,7 +84,7 @@ namespace CardapioService.Services
         {
             var result = Execute(EnumCommand.UPDATE, entity);
             if (result.Success)
-                return factoryResponse.Repository.Create(entity);
+                return factoryResponse.Repository.Update(entity);
             return result;
         }
 

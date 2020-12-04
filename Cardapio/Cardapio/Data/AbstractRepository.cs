@@ -81,7 +81,7 @@ namespace CardapioService.Data
         {
             try
             {
-                context.Add(entity);
+                context.Update(entity);
                 context.SaveChanges();
                 Result<T> result = new Result<T>(true, entity);
                 return result;

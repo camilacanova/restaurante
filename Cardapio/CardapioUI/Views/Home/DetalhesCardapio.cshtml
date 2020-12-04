@@ -1,0 +1,85 @@
+﻿@model CardapioUI.Models.Cardapio
+
+@{
+    ViewData["Title"] = "Detalhes Cardápio";
+}
+
+
+<div>
+    <h4>Cardápio</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Observacao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Observacao)
+        </dd>
+    </dl>
+    @Html.ActionLink("Editar", "EditarCardapio", "Home", new { id = Model.Id })
+    <hr>
+    <h4>Itens do Cardápio</h4>
+    <hr />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("Id")
+                </th>
+                <th>
+                    @Html.DisplayName("Nome")
+                </th>
+                <th>
+                    @Html.DisplayName("Valor")
+                </th>
+                <th>
+                    @Html.DisplayName("Observação")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.ItensCardapio != null)
+            {
+                foreach (var item in Model.ItensCardapio)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NomeItem)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Valor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Observacao)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "EditarItemCardapio", "ItemCardapio", new { id = item.Id, idCardapio = Model.Id }) |
+                            @Html.ActionLink("Excluir", "ExcluirItemCardapio", "ItemCardapio", new { id = item.Id, idCardapio = Model.Id }) |
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    @Html.ActionLink("Novo Item", "CriarItem", "ItemCardapio", new { idCardapio = Model.Id })
+    <hr>
+    <a asp-action="Index">Voltar a lista de cardápios</a>
+</div>

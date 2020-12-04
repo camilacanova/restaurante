@@ -61,13 +61,7 @@ namespace CardapioService.Migrations
                     b.Property<string>("Observacao")
                         .HasColumnType("text");
 
-                    b.Property<int>("RestauranteId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RestauranteId")
-                        .IsUnique();
 
                     b.ToTable("Cardapio");
                 });
@@ -106,20 +100,18 @@ namespace CardapioService.Migrations
                     b.Property<int>("CardapioId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("CategoriaId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("NomeItem")
                         .HasColumnType("text");
 
                     b.Property<string>("Observacao")
                         .HasColumnType("text");
 
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("numeric");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CardapioId");
-
-                    b.HasIndex("CategoriaId");
 
                     b.ToTable("ItemCardapio");
                 });
@@ -174,23 +166,12 @@ namespace CardapioService.Migrations
             modelBuilder.Entity("CardapioService.Model.Adicional", b =>
                 {
                     b.HasOne("CardapioService.Model.ItemCardapio", "ItemCardapio")
-                        .WithMany("AdicionaisItem")
+                        .WithMany()
                         .HasForeignKey("ItemCardapioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ItemCardapio");
-                });
-
-            modelBuilder.Entity("CardapioService.Model.Cardapio", b =>
-                {
-                    b.HasOne("CardapioService.Model.Restaurante", "Restaurante")
-                        .WithOne("Cardapio")
-                        .HasForeignKey("CardapioService.Model.Cardapio", "RestauranteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Restaurante");
                 });
 
             modelBuilder.Entity("CardapioService.Model.ItemCardapio", b =>
@@ -201,15 +182,7 @@ namespace CardapioService.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CardapioService.Model.Categoria", "CategoriaItem")
-                        .WithMany()
-                        .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Cardapio");
-
-                    b.Navigation("CategoriaItem");
                 });
 
             modelBuilder.Entity("CardapioService.Model.TipoAdicional", b =>
@@ -227,16 +200,6 @@ namespace CardapioService.Migrations
             modelBuilder.Entity("CardapioService.Model.Cardapio", b =>
                 {
                     b.Navigation("ItensCardapio");
-                });
-
-            modelBuilder.Entity("CardapioService.Model.ItemCardapio", b =>
-                {
-                    b.Navigation("AdicionaisItem");
-                });
-
-            modelBuilder.Entity("CardapioService.Model.Restaurante", b =>
-                {
-                    b.Navigation("Cardapio");
                 });
 #pragma warning restore 612, 618
         }

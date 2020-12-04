@@ -27,13 +27,13 @@ namespace CardapioService.Controllers
 
         [HttpPost]
         [Route("create")]
-        public IActionResult CreateItemCardapio(ItemCardapio itemCardapio)
+        public IActionResult CreateItemCardapio([FromRoute]int id_cardapio, ItemCardapio itemCardapio)
         {
             try
             {
                 var result = facade.Create(itemCardapio);
                 if (result.Success)
-                    return CreatedAtAction("CreateCardapio", new { Id = result.Entities[0].Id });
+                    return CreatedAtAction("CreateItemCardapio", new { Id = result.Entities[0].Id });
 
                 return BadRequest();
             }
@@ -51,7 +51,11 @@ namespace CardapioService.Controllers
             try
             {
                 var result = facade.Read(new ItemCardapio() { Id = idItemCardapio });
-                return CreatedAtAction("ReadCardapio", new { result.Entities });
+
+                if (result != null && result.Entities != null && result.Entities.Count > 0)
+                    return CreatedAtAction("ReadItemCardapio", result.Entities[0]);
+
+                return CreatedAtAction("ReadItemCardapio", new { });
             }
             catch (Exception ex)
             {
@@ -67,7 +71,7 @@ namespace CardapioService.Controllers
             try
             {
                 var result = facade.ReadAll(new ItemCardapio());
-                return CreatedAtAction("ReadAllCardapio", new { result.Entities });
+                return CreatedAtAction("ReadAllItemCardapio", new { result.Entities });
             }
             catch (Exception ex)
             {
@@ -76,7 +80,7 @@ namespace CardapioService.Controllers
             }
         }
 
-        [HttpPatch]
+        [HttpPut]
         [Route("update")]
         public IActionResult UpdateItemCardapio(ItemCardapio itemCardapio)
         {
@@ -84,7 +88,7 @@ namespace CardapioService.Controllers
             {
                 var result = facade.Update(itemCardapio);
                 if (result.Success)
-                    return CreatedAtAction("UpdateCardapio", result.Entities[0]);
+                    return CreatedAtAction("UpdateItemCardapio", result.Entities[0]);
 
                 return BadRequest();
             }

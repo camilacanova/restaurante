@@ -10,6 +10,6 @@ namespace CardapioUI.Models
     public class Restaurante : BaseEntity
     {
         public string Nome { get; set; }
-        public Cardapio Cardapio { get; set; }
+        public List<Cardapio> Cardapios { get; set; }
     }
 }

@@ -52,7 +52,10 @@ namespace CardapioService.Controllers
             try
             {
                 var result = facade.Read(new Cardapio() { Id = idCardapio });
-                return CreatedAtAction("ReadCardapio", result.Entities);
+                if (result != null && result.Entities != null && result.Entities.Count > 0)
+                    return CreatedAtAction("ReadCardapio", result.Entities[0]);
+                else
+                    return CreatedAtAction("ReadCardapio", new { });
             }
             catch (Exception ex)
             {
@@ -77,7 +80,7 @@ namespace CardapioService.Controllers
             }
         }
 
-        [HttpPatch]
+        [HttpPut]
         [Route("update")]
         public IActionResult UpdateCardapio(Cardapio cardapio)
         {

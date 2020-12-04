@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<CardapioUI.Models.Cardapio>
 
 @{
-    ViewData["Title"] = "ListaCardapio";
+    ViewData["Title"] = "Lista de Cardápios";
 }
 
-<h1>ListaCardapio</h1>
+    <h1>Lista de Cardápios</h1>
 
 <p>
     @Html.ActionLink("Novo Cardápio", "CriarCardapio", "Home")
@@ -24,23 +24,24 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Observacao)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Observacao)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalhes", "DetalhesCardapio", "Home", new { id = item.Id }) |
+                    @Html.ActionLink("Editar", "EditarCardapio", "Home", new { id = item.Id }) |
+                    @Html.ActionLink("Excluir", "ExcluirCardapio", "Home", new { id = item.Id }) |
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

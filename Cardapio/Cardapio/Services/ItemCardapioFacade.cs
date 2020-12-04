@@ -23,6 +23,7 @@ namespace CardapioService.Services
 
             if (itemUpdate != null)
             {
+                itemUpdate.NomeItem = entity.NomeItem;
                 itemUpdate.Valor = entity.Valor;
                 itemUpdate.Observacao = entity.Observacao;
 
