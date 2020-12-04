@@ -50,7 +50,7 @@ namespace CardapioService.Controllers
         {
             try
             {
-                var result = facade.Read(idItemCardapio);
+                var result = facade.Read(new ItemCardapio() { Id = idItemCardapio });
                 return CreatedAtAction("ReadCardapio", new { result.Entities });
             }
             catch (Exception ex)

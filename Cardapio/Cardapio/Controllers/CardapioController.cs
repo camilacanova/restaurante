@@ -51,8 +51,8 @@ namespace CardapioService.Controllers
         {
             try
             {
-                var result = facade.Read(idCardapio);
-                return CreatedAtAction("ReadCardapio", new { result.Entities });
+                var result = facade.Read(new Cardapio() { Id = idCardapio });
+                return CreatedAtAction("ReadCardapio", result.Entities);
             }
             catch (Exception ex)
             {
@@ -68,7 +68,7 @@ namespace CardapioService.Controllers
             try
             {
                 var result = facade.ReadAll(new Cardapio());
-                return CreatedAtAction("ReadAllCardapio", new { result.Entities });
+                return CreatedAtAction("ReadAllCardapio", result.Entities);
             }
             catch (Exception ex)
             {

@@ -12,7 +12,7 @@ namespace CardapioService.Services
     {
         Result<T> Create(T entity);
         Result<T> ReadAll(T entity);
-        Result<T> Read(int entityId);
+        Result<T> Read(T entity);
         Result<T> Update(T entity);
         Result<T> Delete(int entityId);
     }

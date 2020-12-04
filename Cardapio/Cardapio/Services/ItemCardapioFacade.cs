@@ -18,7 +18,7 @@ namespace CardapioService.Services
 
         public override Result<ItemCardapio> Update(ItemCardapio entity)
         {
-            var result = factoryResponse.Repository.Read(entity.Id);
+            var result = factoryResponse.Repository.Read(entity);
             ItemCardapio itemUpdate = result.Entities[0];
 
             if (itemUpdate != null)

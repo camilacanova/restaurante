@@ -46,11 +46,11 @@ namespace CardapioService.Data
             }
         }
 
-        public virtual Result<T> Read(int entityId)
+        public virtual Result<T> Read(T entity)
         {
             try
             {
-                T item = context.Set<T>().SingleOrDefault(c => c.Id == entityId);
+                T item = context.Set<T>().SingleOrDefault(c => c.Id == entity.Id);
                 Result<T> result = new Result<T>(true, item);
                 return result;
             }

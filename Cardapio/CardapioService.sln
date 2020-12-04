@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardapioService", "Cardapio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BDDRestaurante", "BDDRestaurante\BDDRestaurante.csproj", "{9F5911D7-84F1-41E9-9A1D-646F4F645F02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardapioUI", "CardapioUI\CardapioUI.csproj", "{E24A4B93-8B3E-4BB2-B870-11DEEB188DE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9F5911D7-84F1-41E9-9A1D-646F4F645F02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F5911D7-84F1-41E9-9A1D-646F4F645F02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F5911D7-84F1-41E9-9A1D-646F4F645F02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E24A4B93-8B3E-4BB2-B870-11DEEB188DE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E24A4B93-8B3E-4BB2-B870-11DEEB188DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E24A4B93-8B3E-4BB2-B870-11DEEB188DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E24A4B93-8B3E-4BB2-B870-11DEEB188DE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

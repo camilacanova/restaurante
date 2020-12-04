@@ -23,11 +23,11 @@ namespace CardapioService.Data
             return result;
         }
 
-        public override Result<Cardapio> Read(int entityId)
+        public override Result<Cardapio> Read(Cardapio entity)
         {
             Cardapio item = context.Set<Cardapio>().
                 Include(x => x.ItensCardapio).
-                SingleOrDefault(c => c.Id == entityId);
+                SingleOrDefault(c => c.Id == entity.Id);
             Result<Cardapio> result = new Result<Cardapio>(true, item);
             return result;
         }

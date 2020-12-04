@@ -43,7 +43,8 @@ namespace CardapioService.Services
                 {
                     var r = strategy.Execute(entity);
                     result.Success = result.Success && r.Success;
-                    result.Messages.AddRange(r.Messages);
+                    if (r.Messages != null)
+                        result.Messages.AddRange(r.Messages);
                 }
 
                 return result;
@@ -71,12 +72,11 @@ namespace CardapioService.Services
             return result;
         }
 
-        public virtual Result<T> Read(int entityId)
+        public virtual Result<T> Read(T entity)
         {
-            T entity = (T)(new BaseEntity() { Id = entityId });
             var result = Execute(EnumCommand.READ, entity);
             if (result.Success)
-                return factoryResponse.Repository.Read(entityId);
+                return factoryResponse.Repository.Read(entity);
             return result;
         }
 
@@ -93,7 +93,7 @@ namespace CardapioService.Services
             T entity = (T)(new BaseEntity() { Id = entityId });
             var result = Execute(EnumCommand.DELETE, entity);
             if (result.Success)
-                return factoryResponse.Repository.Read(entityId);
+                return factoryResponse.Repository.Delete(entityId);
             return result;
         }
     }
