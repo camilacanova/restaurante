@@ -9,13 +9,11 @@ using System.Threading.Tasks;
 
 namespace CardapioService.Structures
 {
-    public class CardapioFactory : AbstractSimpleFactory<Cardapio> 
+    public class CardapioBuilder : AbstractBuilder<Cardapio>
     {
-        public CardapioFactory(CardapioServiceContext context) : base(context)
-        {
-        }
+        public CardapioBuilder(CardapioServiceContext context) : base(context) { }
 
-        public override FactoryResponse<Cardapio> create()
+        public override BuilderResponse<Cardapio> create()
         {
 
             CardapioRepository cardapioRepo = new CardapioRepository(Context);
@@ -34,7 +32,7 @@ namespace CardapioService.Structures
             strategies.Add(EnumCommand.DELETE, delete);
 
 
-            FactoryResponse<Cardapio> response = new FactoryResponse<Cardapio>();
+            BuilderResponse<Cardapio> response = new BuilderResponse<Cardapio>();
             response.Repository = cardapioRepo;
             response.Strategies = strategies;
 

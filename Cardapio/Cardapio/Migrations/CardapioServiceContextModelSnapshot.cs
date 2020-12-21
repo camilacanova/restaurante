@@ -189,7 +189,8 @@ namespace CardapioService.Migrations
                 {
                     b.HasOne("CardapioService.Model.Adicional", null)
                         .WithMany("TiposAdicionais")
-                        .HasForeignKey("AdicionalId");
+                        .HasForeignKey("AdicionalId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CardapioService.Model.Adicional", b =>

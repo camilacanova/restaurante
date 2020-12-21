@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace CardapioService.Structures
 {
-    public abstract class AbstractSimpleFactory<T> : IFactory<T>
+    public abstract class AbstractBuilder<T> : IBuilder<T>
         where T : BaseEntity
     {
-        public abstract FactoryResponse<T> create();
+        public abstract BuilderResponse<T> create();
 
         protected CardapioServiceContext Context;
-        public AbstractSimpleFactory(CardapioServiceContext context)
+        public AbstractBuilder(CardapioServiceContext context)
         {
             Context = context;
         }

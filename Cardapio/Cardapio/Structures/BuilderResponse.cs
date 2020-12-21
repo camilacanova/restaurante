@@ -9,8 +9,11 @@ using System.Threading.Tasks;
 
 namespace CardapioService.Structures
 {
-    public interface IFactory<T> where T : BaseEntity
+    public class BuilderResponse<T> where T : BaseEntity
     {
-        FactoryResponse<T> create();
+        public IRepository<T> Repository { get; set; }
+
+        public Dictionary<EnumCommand, List<IStrategy<T>>> Strategies { get; set; }
+
     }
 }

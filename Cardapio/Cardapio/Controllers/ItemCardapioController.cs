@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CardapioService.Controllers
 {
-    [Route("cardapio/{id_cardapio}/item_cardapio")]
+    [Route("api/cardapio/{id_cardapio}/item_cardapio")]
     [ApiController]
     public class ItemCardapioController : ControllerBase
     {
@@ -26,7 +26,6 @@ namespace CardapioService.Controllers
 
 
         [HttpPost]
-        [Route("create")]
         public IActionResult CreateItemCardapio([FromRoute]int id_cardapio, ItemCardapio itemCardapio)
         {
             try
@@ -45,8 +44,8 @@ namespace CardapioService.Controllers
         }
 
         [HttpGet]
-        [Route("read")]
-        public IActionResult ReadItemCardapio(int idItemCardapio)
+        [Route("{idItemCardapio}")]
+        public IActionResult ReadItemCardapio([FromRoute] int idItemCardapio)
         {
             try
             {
@@ -65,7 +64,6 @@ namespace CardapioService.Controllers
         }
 
         [HttpGet]
-        [Route("readAll")]
         public IActionResult ReadAllItemCardapio()
         {
             try
@@ -81,7 +79,6 @@ namespace CardapioService.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
         public IActionResult UpdateItemCardapio(ItemCardapio itemCardapio)
         {
             try
@@ -100,7 +97,6 @@ namespace CardapioService.Controllers
         }
 
         [HttpDelete]
-        [Route("delete")]
         public IActionResult DeleteItemCardapio(int idItemCardapio)
         {
             try

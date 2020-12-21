@@ -4,15 +4,18 @@ using Microsoft.Extensions.Logging;
 using CardapioUI.Models;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System;
 
 namespace CardapioUI.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private string HOST;
 
         public HomeController(ILogger<HomeController> logger)
         {
+            HOST = Environment.GetEnvironmentVariable("SERVICE_HOST");
             _logger = logger;
         }
 
@@ -22,7 +25,7 @@ namespace CardapioUI.Controllers
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-            System.Net.Http.HttpResponseMessage response = client.GetAsync("https://localhost:44308/cardapio/readAll").Result;
+            System.Net.Http.HttpResponseMessage response = client.GetAsync(string.Format("http://{0}/api/cardapio",HOST)).Result;
             List<Cardapio> cardapios = new List<Cardapio>();
             //se retornar com sucesso busca os dados 
             if (response.IsSuccessStatusCode)
@@ -43,7 +46,7 @@ namespace CardapioUI.Controllers
                 {
                     HttpClient client = new HttpClient();
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                    HttpResponseMessage response = client.PostAsJsonAsync<Cardapio>("https://localhost:44308/cardapio/create", cardapio).Result;
+                    HttpResponseMessage response = client.PostAsJsonAsync<Cardapio>(string.Format("http://{0}/api/cardapio", HOST), cardapio).Result;
                     return RedirectToAction("Index");
                 }
 
@@ -60,7 +63,7 @@ namespace CardapioUI.Controllers
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-            System.Net.Http.HttpResponseMessage response = client.GetAsync("https://localhost:44308/cardapio/read?idCardapio=" + id).Result;
+            System.Net.Http.HttpResponseMessage response = client.GetAsync(string.Format("http://{0}/api/cardapio/{1}", HOST, id)).Result;
             Cardapio cardapio = new Cardapio();
             //se retornar com sucesso busca os dados 
             if (response.IsSuccessStatusCode)
@@ -78,7 +81,7 @@ namespace CardapioUI.Controllers
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = client.GetAsync("https://localhost:44308/cardapio/delete?idCardapio=" + id).Result;
+            HttpResponseMessage response = client.DeleteAsync(string.Format("http://{0}/api/cardapio?idCardapio={1}", HOST, id)).Result;
 
 
             return RedirectToAction("Index", "Home");
@@ -92,7 +95,7 @@ namespace CardapioUI.Controllers
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                System.Net.Http.HttpResponseMessage response = client.GetAsync("https://localhost:44308/cardapio/read?idCardapio=" + id).Result;
+                System.Net.Http.HttpResponseMessage response = client.GetAsync(string.Format("http://{0}/api/cardapio/{1}", HOST, id)).Result;
                 //se retornar com sucesso busca os dados 
                 if (response.IsSuccessStatusCode)
                 {
@@ -107,7 +110,7 @@ namespace CardapioUI.Controllers
                 {
                     HttpClient client = new HttpClient();
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                    HttpResponseMessage response = client.PutAsJsonAsync("https://localhost:44308/cardapio/update", cardapio).Result;
+                    HttpResponseMessage response = client.PutAsJsonAsync(string.Format("http://{0}/api/cardapio",HOST), cardapio).Result;
                     return View("DetalhesCardapio", cardapio);
                 }
             }

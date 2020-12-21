@@ -1,0 +1,55 @@
+version: '3.4'
+
+networks:
+  cardapio:
+    driver: bridge
+
+services:
+  cardapioservice:
+    image: ${DOCKER_REGISTRY-}cardapioservice
+    depends_on:
+      - "postgres_image"
+    build:
+      context: .
+      dockerfile: Cardapio/Dockerfile
+    expose:
+      - "80"
+    ports:
+      - "5000:80"
+    environment:
+      DB_CONNECTION_STRING: "Server=postgres_image;Port=5432;Database=DBCardapio;User ID=postgres;Password=admin;Integrated Security=true;Pooling=true"
+    networks:
+      - cardapio
+
+  cardapioui:
+    image: ${DOCKER_REGISTRY-}cardapioui
+    depends_on:
+      - ${DOCKER_REGISTRY-}cardapioservice
+    build:
+      context: .
+      dockerfile: CardapioUI/Dockerfile
+    ports:
+      - "5050:80"   
+    environment:
+      SERVICE_HOST: "cardapioservice"
+    networks:
+      - cardapio
+
+  postgres_image:
+    container_name: postgres_image
+    image: postgres:latest
+    ports:
+      - "5432"
+    restart: always
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: "DBCardapio"
+    networks:
+      - cardapio
+
+volumes:
+  db_volume:
+

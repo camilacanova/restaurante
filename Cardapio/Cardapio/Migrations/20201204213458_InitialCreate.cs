@@ -116,7 +116,7 @@ namespace CardapioService.Migrations
                         column: x => x.AdicionalId,
                         principalTable: "Adicional",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

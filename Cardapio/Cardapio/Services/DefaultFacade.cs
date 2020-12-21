@@ -15,11 +15,11 @@ namespace CardapioService.Services
     public abstract class DefaultFacade<T> : IFacade<T>
         where T : BaseEntity
     {
-        public IFactory<T> Factory { get; set; }
+        public IBuilder<T> Factory { get; set; }
 
-        protected FactoryResponse<T> factoryResponse;
+        protected BuilderResponse<T> factoryResponse;
 
-        public DefaultFacade(IFactory<T> factory)
+        public DefaultFacade(IBuilder<T> factory)
         {
             Factory = factory;
             factoryResponse = Factory.create();

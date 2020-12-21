@@ -10,7 +10,7 @@ using System.Linq;
 namespace CardapioService.Controllers
 {
     [ApiController]
-    [Route("cardapio")]
+    [Route("api/cardapio")]
     public class CardapioController : ControllerBase
     {
 
@@ -27,7 +27,6 @@ namespace CardapioService.Controllers
 
 
         [HttpPost]
-        [Route("create")]
         public IActionResult CreateCardapio(Cardapio cardapio)
         {
             try
@@ -46,8 +45,8 @@ namespace CardapioService.Controllers
         }
 
         [HttpGet]
-        [Route("read")]
-        public IActionResult ReadCardapio(int idCardapio)
+        [Route("{idCardapio}")]
+        public IActionResult ReadCardapio([FromRoute] int idCardapio)
         {
             try
             {
@@ -65,7 +64,6 @@ namespace CardapioService.Controllers
         }
 
         [HttpGet]
-        [Route("readAll")]
         public IActionResult ReadAllCardapio()
         {
             try
@@ -81,7 +79,6 @@ namespace CardapioService.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
         public IActionResult UpdateCardapio(Cardapio cardapio)
         {
             try
@@ -101,7 +98,6 @@ namespace CardapioService.Controllers
         }
 
         [HttpDelete]
-        [Route("delete")]
         public IActionResult DeleteCardapio(int idCardapio)
         {
             try

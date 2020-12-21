@@ -12,7 +12,7 @@ namespace CardapioService.Services
 {
     public class ItemCardapioFacade : DefaultFacade<ItemCardapio>
     {
-        public ItemCardapioFacade(CardapioServiceContext context) : base(new ItemCardapioFactory(context))
+        public ItemCardapioFacade(CardapioServiceContext context) : base(new ItemCardapioBuilder(context))
         {
         }
 

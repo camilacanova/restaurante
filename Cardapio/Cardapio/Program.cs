@@ -1,3 +1,5 @@
+using CardapioService.Data;
+using CardapioService.Util;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -7,7 +9,7 @@ namespace CardapioService
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().MigrateDatabase<CardapioServiceContext>().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

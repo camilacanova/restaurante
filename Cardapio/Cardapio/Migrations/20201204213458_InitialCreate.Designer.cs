@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CardapioService.Migrations
 {
     [DbContext(typeof(CardapioServiceContext))]
-    [Migration("20201204192726_InitialCreate")]
+    [Migration("20201204213458_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -191,7 +191,8 @@ namespace CardapioService.Migrations
                 {
                     b.HasOne("CardapioService.Model.Adicional", null)
                         .WithMany("TiposAdicionais")
-                        .HasForeignKey("AdicionalId");
+                        .HasForeignKey("AdicionalId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CardapioService.Model.Adicional", b =>

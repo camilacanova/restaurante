@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore;
+using System;
 
 namespace CardapioService
 {
@@ -21,9 +22,11 @@ namespace CardapioService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var ConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            //ConnectionString = Configuration.GetConnectionString("CardapioDB");
             services.AddControllers();
             services.AddEntityFrameworkNpgsql()
-             .AddDbContext<CardapioServiceContext>(options => options.UseNpgsql(Configuration.GetConnectionString("CardapioDB")));
+             .AddDbContext<CardapioServiceContext>(options => options.UseNpgsql(ConnectionString));
 
             services.AddSwaggerGen(options =>
             {
@@ -34,6 +37,8 @@ namespace CardapioService
                     Description = "Serviços para operações em um cardápio de restaurante",
                 });
             });
+
+            services.AddCors();
             services.AddControllers().AddNewtonsoftJson(
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -47,7 +52,7 @@ namespace CardapioService
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -57,6 +62,8 @@ namespace CardapioService
             {
                 endpoints.MapControllers();
             });
+
+            app.UseCors(option => option.AllowAnyOrigin());
 
             app.UseSwagger();
             app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "Cardapio Service"));
