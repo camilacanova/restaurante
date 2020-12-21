@@ -9,8 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BDDRestaurante
 {
+    //Testes integrados com o BD 
     [TestClass]
-    public class CardapioFacadeTest
+    public class CardapioFacadeIntegrateTest
     {
         [TestMethod]
         public void CreateTest()
