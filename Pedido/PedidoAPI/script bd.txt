@@ -1,0 +1,18 @@
+
+Verificar se appsettings.json está com o usuario e nome do BD certo
+
+Para criar o BD automaticamente executar abrir o md apontando para a pasta do projeto:
+C:\...\Pedido\PedidoAPI
+
+> dotnet ef migrations add InitialCreate
+> dotnet ef database update
+Criará todas as tabelas
+
+
+
+
+Atenção *******
+Em caso de erro:
+
+Se o comando dotnet n~so for reconhecido no cmd, instale a seguinte extensão usando o Developer PowerShell for VS2019 (Iniciar -> Pasta do VS)
+> dotnet tool install --global dotnet-ef
