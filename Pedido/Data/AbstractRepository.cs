@@ -10,7 +10,7 @@ namespace PedidoAPI.Data
     public class AbstractRepository<T> : IRepository<T> where T : BaseEntity
     {
         public PedidoContext context  { get; set; }
-        public AbstractRepository()
+        public AbstractRepository(PedidoContext context)
         {
             this.context = context;
         }

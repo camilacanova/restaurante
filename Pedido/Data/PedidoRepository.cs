@@ -9,6 +9,10 @@ namespace PedidoAPI.Data
 {
     public class PedidoRepository : AbstractRepository<Pedido>
     {
+        public PedidoRepository(PedidoContext context) : base(context)
+        {
+        }
+
         public override Result<Pedido> Read(Pedido entity)
         {
             try

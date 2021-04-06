@@ -46,10 +46,10 @@ namespace PedidoAPI
                     Description = "Serviços para operações de pedido e pagamento de um restaurante",
                 });
             });
-            services.AddScoped<IRepository<Pedido>, AbstractRepository<Pedido>>();
-            services.AddScoped<AbstractRepository<Pedido>, PedidoRepository>();
+            services.AddTransient<IRepository<Pedido>, AbstractRepository<Pedido>>();
+            services.AddTransient<AbstractRepository<Pedido>, PedidoRepository>();
 
-            services.AddScoped<IService<Pedido>, PedidoService>();
+            services.AddTransient<IService<Pedido>, PedidoService>();
 
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson(
@@ -64,7 +64,7 @@ namespace PedidoAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pedido Service v2"));
+                app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "Pedido Service v2"));
             }
 
             app.UseHttpsRedirection();

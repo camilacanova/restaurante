@@ -17,14 +17,12 @@ namespace PedidoAPI.Controllers
     {
 
         private readonly ILogger<PedidoController> _logger;
-        private PedidoContext context;
-        IService<Pedido> service;
+        IService<Pedido> _service;
 
-        public PedidoController(ILogger<PedidoController> logger, PedidoContext context, IService<Pedido> service)
+        public PedidoController(ILogger<PedidoController> logger, IService<Pedido> service)
         {
             _logger = logger;
-            this.service = service;
-            this.context = context;
+            _service = service;
         }
 
         [HttpPost]
@@ -32,13 +30,10 @@ namespace PedidoAPI.Controllers
         {
             try
             {
-                //var result = facade.Create(cardapio);
-                //if (result.Success)
-                //return CreatedAtAction("CreateCardapio", new { Id = result.Entities[0].Id });
-                //return BadRequest(result.Messages);
-                
-                Result<Pedido> result = service.Create(pedido);
-                return CreatedAtAction("Post", new { Id = result.Entities[0].Id });
+                var result = _service.Create(pedido);
+                if (result.Success)
+                    return CreatedAtAction("Post", new { Id = result.Entities[0].Id });
+                return BadRequest(result.Messages);
             }
             catch (Exception ex)
             {
@@ -52,13 +47,7 @@ namespace PedidoAPI.Controllers
         {
             try
             {
-                // var result = facade.Read(new Cardapio() { Id = idCardapio });
-                // if (result != null && result.Entities != null && result.Entities.Count > 0)
-                //     return CreatedAtAction("ReadCardapio", result.Entities[0]);
-                // else
-                //     return CreatedAtAction("ReadCardapio", new { });
-
-                Result<Pedido> result = service.Create(new Pedido() { MesaId = mesa });
+                Result<Pedido> result = _service.Read(new Pedido() { MesaId = mesa });
                 return CreatedAtAction("Get", result.Entities);
             }
             catch (Exception ex)
@@ -74,12 +63,8 @@ namespace PedidoAPI.Controllers
         {
             try
             {
-                // var result = facade.Read(new Cardapio() { Id = idCardapio });
-                // if (result != null && result.Entities != null && result.Entities.Count > 0)
-                //     return CreatedAtAction("ReadCardapio", result.Entities[0]);
-                // else
-                //     return CreatedAtAction("ReadCardapio", new { });
-                return CreatedAtAction("Get", new List<Pedido>() { new Pedido() { } });
+                Result<Pedido> result = _service.Read(new Pedido() { Id = id });
+                return CreatedAtAction("Get", result.Entities);
             }
             catch (Exception ex)
             {
@@ -94,12 +79,11 @@ namespace PedidoAPI.Controllers
             try
             {
 
-                // var result = facade.Update(cardapio);
-                // if (result.Success)
-                //     return CreatedAtAction("UpdateCardapio", result.Entities[0]);
+                var result = _service.Update(pedido);
+                if (result.Success)
+                    return CreatedAtAction("Patch", result.Entities[0]);
 
-                // return BadRequest();
-                return CreatedAtAction("Patch", new Pedido());
+                return BadRequest();
             }
             catch (Exception ex)
             {
