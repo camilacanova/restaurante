@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PedidoAPI", "PedidoAPI.csproj", "{CFE78A48-5158-4F4C-BD4D-112D647481B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PedidoUI", "..\PedidoUI\PedidoUI.csproj", "{ABDE5A30-4E64-46A6-91D2-857848CD264C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFE78A48-5158-4F4C-BD4D-112D647481B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFE78A48-5158-4F4C-BD4D-112D647481B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFE78A48-5158-4F4C-BD4D-112D647481B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFE78A48-5158-4F4C-BD4D-112D647481B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABDE5A30-4E64-46A6-91D2-857848CD264C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABDE5A30-4E64-46A6-91D2-857848CD264C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABDE5A30-4E64-46A6-91D2-857848CD264C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABDE5A30-4E64-46A6-91D2-857848CD264C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB678EC2-1442-44A1-9A88-6FB392F39CDD}
+	EndGlobalSection
+EndGlobal

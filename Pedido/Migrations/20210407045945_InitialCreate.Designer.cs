@@ -10,8 +10,8 @@ using PedidoAPI.Data;
 namespace PedidoAPI.Migrations
 {
     [DbContext(typeof(PedidoContext))]
-    [Migration("20210405000801_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20210407045945_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
