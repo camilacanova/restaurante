@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PedidoAPI.Model;
+using PedidoAPI.Services;
 
 namespace PedidoAPI.Controllers
 {
@@ -12,12 +13,12 @@ namespace PedidoAPI.Controllers
     [Route("api/pagamento")]
     public class PagamentoController : ControllerBase
     {
-
         private readonly ILogger<PagamentoController> _logger;
-
-        public PagamentoController(ILogger<PagamentoController> logger)
+        private IService<Pagamento> _service;
+        public PagamentoController(ILogger<PagamentoController> logger, IService<Pagamento> service)
         {
             _logger = logger;
+            _service = service;
         }
 
         [HttpPost]

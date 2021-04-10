@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace PedidoAPI.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +12,8 @@ namespace PedidoAPI.Migrations
                 name: "Mesa",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     NumeroMesa = table.Column<int>(type: "integer", nullable: false),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -24,7 +26,8 @@ namespace PedidoAPI.Migrations
                 name: "StatusItem",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Descricao = table.Column<string>(type: "text", nullable: true),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -37,7 +40,8 @@ namespace PedidoAPI.Migrations
                 name: "StatusPedido",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Descricao = table.Column<string>(type: "text", nullable: true),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -50,7 +54,8 @@ namespace PedidoAPI.Migrations
                 name: "TipoPagamento",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Descricao = table.Column<string>(type: "text", nullable: true),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -64,9 +69,7 @@ namespace PedidoAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    StatusId = table.Column<Guid>(type: "uuid", nullable: true),
                     StatusPedidoId = table.Column<int>(type: "integer", nullable: false),
-                    MesaId1 = table.Column<Guid>(type: "uuid", nullable: true),
                     MesaId = table.Column<int>(type: "integer", nullable: false),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -74,14 +77,14 @@ namespace PedidoAPI.Migrations
                 {
                     table.PrimaryKey("PK_Pedido", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pedido_Mesa_MesaId1",
-                        column: x => x.MesaId1,
+                        name: "FK_Pedido_Mesa_MesaId",
+                        column: x => x.MesaId,
                         principalTable: "Mesa",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Pedido_StatusPedido_StatusId",
-                        column: x => x.StatusId,
+                        name: "FK_Pedido_StatusPedido_StatusPedidoId",
+                        column: x => x.StatusPedidoId,
                         principalTable: "StatusPedido",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -94,7 +97,6 @@ namespace PedidoAPI.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Valor = table.Column<decimal>(type: "numeric", nullable: false),
                     Parcelas = table.Column<int>(type: "integer", nullable: false),
-                    TipoPagamentoId1 = table.Column<Guid>(type: "uuid", nullable: true),
                     TipoPagamentoId = table.Column<int>(type: "integer", nullable: false),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -102,8 +104,8 @@ namespace PedidoAPI.Migrations
                 {
                     table.PrimaryKey("PK_Pagamento", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pagamento_TipoPagamento_TipoPagamentoId1",
-                        column: x => x.TipoPagamentoId1,
+                        name: "FK_Pagamento_TipoPagamento_TipoPagamentoId",
+                        column: x => x.TipoPagamentoId,
                         principalTable: "TipoPagamento",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -116,7 +118,6 @@ namespace PedidoAPI.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ProdutoId = table.Column<int>(type: "integer", nullable: false),
                     Quantidade = table.Column<int>(type: "integer", nullable: false),
-                    StatusId = table.Column<Guid>(type: "uuid", nullable: true),
                     StatusItemId = table.Column<int>(type: "integer", nullable: false),
                     PedidoId = table.Column<Guid>(type: "uuid", nullable: true),
                     Ativo = table.Column<bool>(type: "boolean", nullable: false)
@@ -131,11 +132,41 @@ namespace PedidoAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ItemPedido_StatusItem_StatusId",
-                        column: x => x.StatusId,
+                        name: "FK_ItemPedido_StatusItem_StatusItemId",
+                        column: x => x.StatusItemId,
                         principalTable: "StatusItem",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "StatusItem",
+                columns: new[] { "Id", "Ativo", "Descricao" },
+                values: new object[,]
+                {
+                    { 1, true, "Solicitado" },
+                    { 2, true, "Em Preparação" },
+                    { 3, true, "Pronto" },
+                    { 4, true, "Entregue" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "StatusPedido",
+                columns: new[] { "Id", "Ativo", "Descricao" },
+                values: new object[,]
+                {
+                    { 1, true, "Aberto" },
+                    { 2, true, "Encerrado" },
+                    { 3, true, "Pago" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TipoPagamento",
+                columns: new[] { "Id", "Ativo", "Descricao" },
+                values: new object[,]
+                {
+                    { 1, true, "Cartão" },
+                    { 2, true, "Dinheiro" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -144,24 +175,24 @@ namespace PedidoAPI.Migrations
                 column: "PedidoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemPedido_StatusId",
+                name: "IX_ItemPedido_StatusItemId",
                 table: "ItemPedido",
-                column: "StatusId");
+                column: "StatusItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pagamento_TipoPagamentoId1",
+                name: "IX_Pagamento_TipoPagamentoId",
                 table: "Pagamento",
-                column: "TipoPagamentoId1");
+                column: "TipoPagamentoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pedido_MesaId1",
+                name: "IX_Pedido_MesaId",
                 table: "Pedido",
-                column: "MesaId1");
+                column: "MesaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pedido_StatusId",
+                name: "IX_Pedido_StatusPedidoId",
                 table: "Pedido",
-                column: "StatusId");
+                column: "StatusPedidoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

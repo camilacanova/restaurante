@@ -13,8 +13,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PedidoAPI.Data;
+using PedidoAPI.Data.Repositories;
 using PedidoAPI.Model;
 using PedidoAPI.Services;
+using PedidoAPI.Strategies;
 
 namespace PedidoAPI
 {
@@ -46,10 +48,31 @@ namespace PedidoAPI
                     Description = "Serviços para operações de pedido e pagamento de um restaurante",
                 });
             });
+
+            //repositories
             services.AddTransient<IRepository<Pedido>, AbstractRepository<Pedido>>();
             services.AddTransient<AbstractRepository<Pedido>, PedidoRepository>();
 
+            services.AddTransient<IRepository<ItemPedido>, AbstractRepository<ItemPedido>>();
+            services.AddTransient<AbstractRepository<ItemPedido>, ItemPedidoRepository>();
+
+            services.AddTransient<IRepository<Pagamento>, AbstractRepository<Pagamento>>();
+            services.AddTransient<AbstractRepository<Pagamento>, PagamentoRepository>();
+
+            //services
             services.AddTransient<IService<Pedido>, PedidoService>();
+            services.AddTransient<IService<ItemPedido>, ItemPedidoService>();
+            services.AddTransient<IService<Pagamento>, PagamentoService>();
+
+            //strategies
+            //services.AddTransient<IStrategy<ItemPedido>, GetItemPedido>();
+            //services.AddTransient<IStrategy<Pedido>, GetPedido>();
+            //services.AddTransient<IStrategy<Produto>, GetProdutoStrategy>();
+            //services.AddTransient<IStrategy<ItemPedido>, PatchItemPedido>();
+            //services.AddTransient<IStrategy<Pedido>, PatchPedido>();
+            //services.AddTransient<IStrategy<ItemPedido>, PostItemPedido>();
+            //services.AddTransient<IStrategy<Pagamento>, PostPagamento>();
+            //services.AddTransient<IStrategy<Pedido>, PostPedido>();
 
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson(

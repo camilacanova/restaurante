@@ -5,7 +5,7 @@ using PedidoAPI.Data;
 using PedidoAPI.Model;
 using PedidoAPI.Util;
 
-namespace PedidoAPI.Data
+namespace PedidoAPI.Data.Repositories
 {
     public class PedidoRepository : AbstractRepository<Pedido>
     {

@@ -10,6 +10,5 @@ namespace PedidoAPI.Services
         Result<T> ReadAll(T entity);
         Result<T> Read(T entity);
         Result<T> Update(T entity);
-        Result<T> Delete(T entity);
     }
 }

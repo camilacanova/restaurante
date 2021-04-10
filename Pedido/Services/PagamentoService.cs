@@ -6,30 +6,30 @@ using PedidoAPI.Util;
 
 namespace PedidoAPI.Services
 {
-    public class PedidoService : IService<Pedido>
+    public class PagamentoService : IService<Pagamento>
     {
-        private IRepository<Pedido> repo;
-        public PedidoService(IRepository<Pedido> repo)
+        private IRepository<Pagamento> repo;
+        public PagamentoService(IRepository<Pagamento> repo)
         {
             this.repo = repo; 
         }
 
-        public Result<Pedido> Create(Pedido entity)
+        public Result<Pagamento> Create(Pagamento entity)
         {
             return repo.Create(entity);
         }
 
-        public Result<Pedido> Read(Pedido entity)
+        public Result<Pagamento> Read(Pagamento entity)
         {
             return repo.ReadAll(entity);
         }
 
-        public Result<Pedido> ReadAll(Pedido entity)
+        public Result<Pagamento> ReadAll(Pagamento entity)
         {
             return repo.Read(entity);
         }
 
-        public Result<Pedido> Update(Pedido entity)
+        public Result<Pagamento> Update(Pagamento entity)
         {
             return repo.Update(entity);
         }

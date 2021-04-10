@@ -25,22 +25,24 @@ namespace PedidoAPI.Data
                 foreignKey.DeleteBehavior = DeleteBehavior.Cascade;
             }
 
-            // modelBuilder.Entity<Restaurante>().HasData(
-            //     new Restaurante { Id = 1, Ativo = true, Nome = "Restaurante A", Observacao = "Teste" }
-            // );
+            modelBuilder.Entity<StatusItem>().HasData(
+                new StatusItem() { Ativo = true, Descricao = "Solicitado", Id = 1 },
+                new StatusItem() { Ativo = true, Descricao = "Em Preparação", Id = 2 },
+                new StatusItem() { Ativo = true, Descricao = "Pronto", Id = 3 },
+                new StatusItem() { Ativo = true, Descricao = "Entregue", Id = 4 }
+            );
 
-            // modelBuilder.Entity<Cardapio>().HasData(
-            //   new Cardapio { Id = 1, Nome = "Café da manhã", Ativo = true, Observacao = "Teste" }
-            // );
+            modelBuilder.Entity<StatusPedido>().HasData(
+                new StatusPedido() { Descricao = "Aberto", Id = 1, Ativo = true },
+                new StatusPedido() { Descricao = "Encerrado", Id = 2, Ativo = true },
+                new StatusPedido() { Descricao = "Pago", Id = 3, Ativo = true }
+            );
 
-            // modelBuilder.Entity<ItemCardapio>().HasData(
-            //   new ItemCardapio { Id = 1, NomeItem = "Ovos Mexidos", Ativo = true, CardapioId = 1, Observacao = "Teste", Valor = 10 },
-            //   new ItemCardapio { Id = 2, NomeItem = "Café", Ativo = true, CardapioId = 1, Observacao = "Teste", Valor = 10 },
-            //   new ItemCardapio { Id = 3, NomeItem = "Bolo de milho", Ativo = true, CardapioId = 1, Observacao = "Teste", Valor = 10 },
-            //   new ItemCardapio { Id = 4, NomeItem = "Baguete", Ativo = true, CardapioId = 1, Observacao = "Teste", Valor = 10 }
-            // );
-
-
+            modelBuilder.Entity<TipoPagamento>().HasData(
+                new TipoPagamento() { Descricao = "Cartão", Id = 1, Ativo = true },
+                new TipoPagamento() { Descricao = "Dinheiro", Id = 2, Ativo = true }
+            );
+            
         }
     }
 }

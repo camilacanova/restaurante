@@ -10,4 +10,11 @@ namespace PedidoAPI.Model
         public Guid Id { get; set; }
         public bool Ativo { get; set; }
     }
+
+    public class BaseType
+    {
+        [Key]
+        public int Id { get; set; }
+        public bool Ativo { get; set; }
+    }
 }

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PedidoAPI.Model
 {
     [Table("Mesa")]
-    public class Mesa : BaseEntity
+    public class Mesa : BaseType
     {
         public int NumeroMesa { get; set; }
     }

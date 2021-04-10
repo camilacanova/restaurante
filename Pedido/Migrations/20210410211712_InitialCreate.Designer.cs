@@ -10,8 +10,8 @@ using PedidoAPI.Data;
 namespace PedidoAPI.Migrations
 {
     [DbContext(typeof(PedidoContext))]
-    [Migration("20210405000801_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20210410211712_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,9 +39,6 @@ namespace PedidoAPI.Migrations
                     b.Property<int>("Quantidade")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("StatusId")
-                        .HasColumnType("uuid");
-
                     b.Property<int>("StatusItemId")
                         .HasColumnType("integer");
 
@@ -49,16 +46,17 @@ namespace PedidoAPI.Migrations
 
                     b.HasIndex("PedidoId");
 
-                    b.HasIndex("StatusId");
+                    b.HasIndex("StatusItemId");
 
                     b.ToTable("ItemPedido");
                 });
 
             modelBuilder.Entity("PedidoAPI.Model.Mesa", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("boolean");
@@ -86,15 +84,12 @@ namespace PedidoAPI.Migrations
                     b.Property<int>("TipoPagamentoId")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("TipoPagamentoId1")
-                        .HasColumnType("uuid");
-
                     b.Property<decimal>("Valor")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TipoPagamentoId1");
+                    b.HasIndex("TipoPagamentoId");
 
                     b.ToTable("Pagamento");
                 });
@@ -111,29 +106,24 @@ namespace PedidoAPI.Migrations
                     b.Property<int>("MesaId")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("MesaId1")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("StatusId")
-                        .HasColumnType("uuid");
-
                     b.Property<int>("StatusPedidoId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MesaId1");
+                    b.HasIndex("MesaId");
 
-                    b.HasIndex("StatusId");
+                    b.HasIndex("StatusPedidoId");
 
                     b.ToTable("Pedido");
                 });
 
             modelBuilder.Entity("PedidoAPI.Model.StatusItem", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("boolean");
@@ -144,13 +134,40 @@ namespace PedidoAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StatusItem");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ativo = true,
+                            Descricao = "Solicitado"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ativo = true,
+                            Descricao = "Em Preparação"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Ativo = true,
+                            Descricao = "Pronto"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Ativo = true,
+                            Descricao = "Entregue"
+                        });
                 });
 
             modelBuilder.Entity("PedidoAPI.Model.StatusPedido", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("boolean");
@@ -161,13 +178,34 @@ namespace PedidoAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StatusPedido");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ativo = true,
+                            Descricao = "Aberto"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ativo = true,
+                            Descricao = "Encerrado"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Ativo = true,
+                            Descricao = "Pago"
+                        });
                 });
 
             modelBuilder.Entity("PedidoAPI.Model.TipoPagamento", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("boolean");
@@ -178,6 +216,20 @@ namespace PedidoAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TipoPagamento");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ativo = true,
+                            Descricao = "Cartão"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ativo = true,
+                            Descricao = "Dinheiro"
+                        });
                 });
 
             modelBuilder.Entity("PedidoAPI.Model.ItemPedido", b =>
@@ -189,8 +241,9 @@ namespace PedidoAPI.Migrations
 
                     b.HasOne("PedidoAPI.Model.StatusItem", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("StatusItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Status");
                 });
@@ -199,8 +252,9 @@ namespace PedidoAPI.Migrations
                 {
                     b.HasOne("PedidoAPI.Model.TipoPagamento", "TipoPagamento")
                         .WithMany()
-                        .HasForeignKey("TipoPagamentoId1")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TipoPagamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TipoPagamento");
                 });
@@ -209,13 +263,15 @@ namespace PedidoAPI.Migrations
                 {
                     b.HasOne("PedidoAPI.Model.Mesa", "Mesa")
                         .WithMany()
-                        .HasForeignKey("MesaId1")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MesaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PedidoAPI.Model.StatusPedido", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("StatusPedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Mesa");
 
