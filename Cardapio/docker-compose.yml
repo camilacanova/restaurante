@@ -6,7 +6,7 @@ networks:
 
 services:
   cardapioservice:
-    image: draxlucas/cardapioservice
+    image: camilacanova/cardapioservice
     depends_on:
       - "postgres_image"
     build:
@@ -21,7 +21,7 @@ services:
       - cardapio
 
   cardapioui:
-    image: draxlucas/cardapioui
+    image: camilacanova/cardapioui
     depends_on:
       - ${DOCKER_REGISTRY-}cardapioservice
     build:

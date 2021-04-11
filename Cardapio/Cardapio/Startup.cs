@@ -22,8 +22,8 @@ namespace CardapioService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var ConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-            //ConnectionString = Configuration.GetConnectionString("CardapioDB");
+            //var ConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            var ConnectionString = Configuration.GetConnectionString("CardapioDB");
             services.AddControllers();
             services.AddEntityFrameworkNpgsql()
              .AddDbContext<CardapioServiceContext>(options => options.UseNpgsql(ConnectionString));

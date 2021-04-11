@@ -64,6 +64,15 @@ namespace CardapioService.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cardapio");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ativo = true,
+                            Nome = "Café da manhã",
+                            Observacao = "Teste"
+                        });
                 });
 
             modelBuilder.Entity("CardapioService.Model.Categoria", b =>
@@ -114,6 +123,44 @@ namespace CardapioService.Migrations
                     b.HasIndex("CardapioId");
 
                     b.ToTable("ItemCardapio");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ativo = true,
+                            CardapioId = 1,
+                            NomeItem = "Ovos Mexidos",
+                            Observacao = "Teste",
+                            Valor = 10m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ativo = true,
+                            CardapioId = 1,
+                            NomeItem = "Café",
+                            Observacao = "Teste",
+                            Valor = 10m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Ativo = true,
+                            CardapioId = 1,
+                            NomeItem = "Bolo de milho",
+                            Observacao = "Teste",
+                            Valor = 10m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Ativo = true,
+                            CardapioId = 1,
+                            NomeItem = "Baguete",
+                            Observacao = "Teste",
+                            Valor = 10m
+                        });
                 });
 
             modelBuilder.Entity("CardapioService.Model.Restaurante", b =>
@@ -135,6 +182,15 @@ namespace CardapioService.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Restaurante");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ativo = true,
+                            Nome = "Restaurante A",
+                            Observacao = "Teste"
+                        });
                 });
 
             modelBuilder.Entity("CardapioService.Model.TipoAdicional", b =>

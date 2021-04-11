@@ -119,6 +119,27 @@ namespace CardapioService.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Cardapio",
+                columns: new[] { "Id", "Ativo", "Nome", "Observacao" },
+                values: new object[] { 1, true, "Café da manhã", "Teste" });
+
+            migrationBuilder.InsertData(
+                table: "Restaurante",
+                columns: new[] { "Id", "Ativo", "Nome", "Observacao" },
+                values: new object[] { 1, true, "Restaurante A", "Teste" });
+
+            migrationBuilder.InsertData(
+                table: "ItemCardapio",
+                columns: new[] { "Id", "Ativo", "CardapioId", "NomeItem", "Observacao", "Valor" },
+                values: new object[,]
+                {
+                    { 1, true, 1, "Ovos Mexidos", "Teste", 10m },
+                    { 2, true, 1, "Café", "Teste", 10m },
+                    { 3, true, 1, "Bolo de milho", "Teste", 10m },
+                    { 4, true, 1, "Baguete", "Teste", 10m }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Adicional_ItemCardapioId",
                 table: "Adicional",
