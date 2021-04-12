@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PedidoUI.Models
+namespace ClienteUI.Models
 {
     [Table("Cardapio")]
     public class Cardapio : BaseEntity
     {
         public string Nome { get; set; }
+        public string Imagem { get; set; }
     }
 }

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ClienteUI.Models.Cardapio>
+@{
+    ViewData["Title"] = "Cardapios";
+}
+<section class="u-clearfix u-grey-10 u-section-2" id="sec-d588">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-1">Cardápio</h2>
+        <div class="u-expanded-width u-list u-repeater u-list-1">
+            @{
+                int i = 0;
+                foreach (var item in Model)
+                {
+                    if (i == 3)
+                        i = 0;
+
+                    i++;
+                    <div class="u-container-style u-list-item u-repeater-item u-video-cover u-white u-list-item-@(i)">
+                        <div class="u-container-layout u-similar-container u-container-layout-@(i)">
+                            <img class="u-expanded-width-xl u-image u-image-default u-image-@(i)" data-image-width="1500" data-image-height="1000" src="@(string.Format("data:image/png;base64,{0}", item.Imagem))" data-page-id="29568370">
+                           <p/>
+                            @Html.ActionLink(@item.Nome, "ListaItensCardapio", "ItemCardapio", new { idCardapio = item.Id }, new { @class = "u-text u-text-2" })
+                            <p class="u-text u-text-3">@item.Observacao</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>

@@ -1,6 +1,6 @@
 using System;
 
-namespace PedidoUI.Models
+namespace ClienteUI.Models
 {
     public class ErrorViewModel
     {

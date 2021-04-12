@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PedidoUI.Models
+namespace ClienteUI.Models
 {
     public class BaseEntity
     {

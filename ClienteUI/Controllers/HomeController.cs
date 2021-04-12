@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PedidoUI.Models;
+using ClienteUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PedidoUI.Controllers
+namespace ClienteUI.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,9 +19,10 @@ namespace PedidoUI.Controllers
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Cardapio");
+            return RedirectToAction("ListaCardapios", "Cardapio");
         }
 
         public IActionResult Privacy()

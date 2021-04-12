@@ -26,7 +26,7 @@ namespace CardapioService.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateItemCardapio([FromRoute]int id_cardapio, ItemCardapio itemCardapio)
+        public IActionResult CreateItemCardapio([FromRoute] int id_cardapio, ItemCardapio itemCardapio)
         {
             try
             {
@@ -64,12 +64,12 @@ namespace CardapioService.Controllers
         }
 
         [HttpGet]
-        public IActionResult ReadAllItemCardapio()
+        public IActionResult ReadAllItemCardapio([FromRoute] int id_cardapio)
         {
             try
             {
-                var result = facade.ReadAll(new ItemCardapio());
-                return CreatedAtAction("ReadAllItemCardapio", new { result.Entities });
+                var result = facade.ReadAll(new ItemCardapio() { CardapioId = id_cardapio });
+                return CreatedAtAction("ReadAllItemCardapio", result.Entities);
             }
             catch (Exception ex)
             {
