@@ -5,9 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PedidoAPI.Model
 {
     [NotMapped]
-    public class Produto : BaseEntity
+    public class Produto : BaseType
     {
-        public String Nome { get; set; }
-        public Decimal Preco { get; set; }
+        public string NomeItem { get; set; }
+        public decimal Valor { get; set; }
+        public int CardapioId { get; set; }
+        public string Observacao { get; set; }
     }
 }

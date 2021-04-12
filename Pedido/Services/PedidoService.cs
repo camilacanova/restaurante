@@ -1,37 +1,76 @@
 using System;
 using System.Collections.Generic;
 using PedidoAPI.Data;
+using PedidoAPI.Data.Repositories;
 using PedidoAPI.Model;
+using PedidoAPI.Strategies;
 using PedidoAPI.Util;
 
 namespace PedidoAPI.Services
 {
     public class PedidoService : IService<Pedido>
     {
-        private IRepository<Pedido> repo;
-        public PedidoService(IRepository<Pedido> repo)
+        private AbstractRepository<Pedido> repo;
+        private IGetItemPedido _getItemPedido;
+        private IPatchPedido _patchPedido;
+        private IPostPedido _postPedido;
+        public PedidoService(AbstractRepository<Pedido> repo,
+            IGetItemPedido getItemPedido,
+            IPatchPedido patchPedido,
+            IPostPedido postPedido)
         {
-            this.repo = repo; 
+            this.repo = repo;
+            _getItemPedido = getItemPedido;
+            _patchPedido = patchPedido;
+            _postPedido = postPedido;
         }
 
         public Result<Pedido> Create(Pedido entity)
         {
-            return repo.Create(entity);
+            var result = _postPedido.execute(entity);
+            if (result.Success)
+                return repo.Create(entity);
+            else
+                return result;
         }
 
         public Result<Pedido> Read(Pedido entity)
         {
-            return repo.ReadAll(entity);
+            var result = repo.Read(entity);
+            for (int i = 0; i < result.Entities.Count ; i++)
+            {
+                for (int j = 0; j < result.Entities[i].Itens.Count; j++)
+                {
+                    var r = _getItemPedido.execute(result.Entities[i].Itens[j]);
+                    if (r.Success)
+                        result.Entities[i].Itens[j] = r.Entities[0];
+                }
+            }
+            return result;
         }
 
         public Result<Pedido> ReadAll(Pedido entity)
         {
-            return repo.Read(entity);
+            var result = repo.ReadAll(entity);
+            for (int i = 0; i < result.Entities.Count; i++)
+            {
+                for (int j = 0; j < result.Entities[i].Itens.Count; j++)
+                {
+                    var r = _getItemPedido.execute(result.Entities[i].Itens[j]);
+                    if (r.Success)
+                        result.Entities[i].Itens[j] = r.Entities[0];
+                }
+            }
+            return result;
         }
 
         public Result<Pedido> Update(Pedido entity)
         {
-            return repo.Update(entity);
+            var result = _patchPedido.execute(entity);
+            if (result.Success)
+                return repo.Update(entity);
+            else
+                return result;
         }
     }
 }

@@ -59,11 +59,11 @@ namespace PedidoAPI.Controllers
 
         [HttpGet]
         [Route("{id_pedido}")]
-        public IActionResult Get([FromRoute] Guid id)
+        public IActionResult Get([FromRoute] Guid id_pedido)
         {
             try
             {
-                Result<Pedido> result = _service.Read(new Pedido() { Id = id });
+                Result<Pedido> result = _service.Read(new Pedido() { Id = id_pedido });
                 return CreatedAtAction("Get", result.Entities);
             }
             catch (Exception ex)

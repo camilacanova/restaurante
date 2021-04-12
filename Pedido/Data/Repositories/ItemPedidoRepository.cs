@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PedidoAPI.Data;
 using PedidoAPI.Model;
 using PedidoAPI.Util;
@@ -17,8 +18,27 @@ namespace PedidoAPI.Data.Repositories
         {
             try
             {
-                ItemPedido item = context.Set<ItemPedido>().Where(x=> x.Id == entity.Id).FirstOrDefault();
+                ItemPedido item = context.Set<ItemPedido>()
+                    .Include(x => x.StatusItem)
+                    .Where(x=> x.Id == entity.Id).FirstOrDefault();
                 Result<ItemPedido> result = new Result<ItemPedido>(true, item);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public override Result<ItemPedido> ReadAll(ItemPedido entity)
+        {
+            try
+            {
+                List<ItemPedido> itens = context.Set<ItemPedido>()
+                    .Include(x => x.StatusItem)
+                    .OrderBy(x => x.Id).ToList();
+                Result<ItemPedido> result = new Result<ItemPedido>(true, itens);
                 return result;
             }
             catch (Exception ex)

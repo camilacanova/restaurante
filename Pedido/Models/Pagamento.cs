@@ -11,7 +11,12 @@ namespace PedidoAPI.Model
         public decimal Valor { get; set; }
         public int Parcelas { get; set; }
         public TipoPagamento TipoPagamento { get; set; }
+        [ForeignKey("TipoPagamento")]
         public int TipoPagamentoId { get; set; }
 
+        public Pedido Pedido { get; set; }
+
+        [ForeignKey("Pedido")]
+        public Guid PedidoId { get; set; }
     }
 }

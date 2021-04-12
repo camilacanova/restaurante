@@ -65,15 +65,18 @@ namespace PedidoAPI
             services.AddTransient<IService<Pagamento>, PagamentoService>();
 
             //strategies
-            //services.AddTransient<IStrategy<ItemPedido>, GetItemPedido>();
-            //services.AddTransient<IStrategy<Pedido>, GetPedido>();
-            //services.AddTransient<IStrategy<Produto>, GetProdutoStrategy>();
-            //services.AddTransient<IStrategy<ItemPedido>, PatchItemPedido>();
-            //services.AddTransient<IStrategy<Pedido>, PatchPedido>();
-            //services.AddTransient<IStrategy<ItemPedido>, PostItemPedido>();
-            //services.AddTransient<IStrategy<Pagamento>, PostPagamento>();
-            //services.AddTransient<IStrategy<Pedido>, PostPedido>();
+            services.AddTransient<IGetProdutoStrategy, GetProdutoStrategy>();
 
+            services.AddTransient<IGetItemPedido, GetItemPedido>();
+            services.AddTransient<IPatchItemPedido, PatchItemPedido>();
+            services.AddTransient<IPostItemPedido, PostItemPedido>();
+            
+            services.AddTransient<IPatchPedido, PatchPedido>();
+            services.AddTransient<IPostPedido, PostPedido>();
+
+            services.AddTransient<IPostPagamento, PostPagamento>();
+
+            services.AddHttpClient();
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson(
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
