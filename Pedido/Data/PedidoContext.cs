@@ -44,13 +44,13 @@ namespace PedidoAPI.Data
             );
 
             modelBuilder.Entity<Mesa>().HasData(
-                new Mesa() { NumeroMesa = 1, Id = 1, Ativo = true },
-                new Mesa() { NumeroMesa = 2, Id = 2, Ativo = true },
-                new Mesa() { NumeroMesa = 3, Id = 3, Ativo = true },
-                new Mesa() { NumeroMesa = 4, Id = 4, Ativo = true },
-                new Mesa() { NumeroMesa = 5, Id = 5, Ativo = true },
-                new Mesa() { NumeroMesa = 6, Id = 6, Ativo = true },
-                new Mesa() { NumeroMesa = 7, Id = 7, Ativo = true }
+                new Mesa() { NumeroMesa = 1, Id = 1, Ocupada = false, Ativo = true },
+                new Mesa() { NumeroMesa = 2, Id = 2, Ocupada = false, Ativo = true },
+                new Mesa() { NumeroMesa = 3, Id = 3, Ocupada = false, Ativo = true },
+                new Mesa() { NumeroMesa = 4, Id = 4, Ocupada = false, Ativo = true },
+                new Mesa() { NumeroMesa = 5, Id = 5, Ocupada = false, Ativo = true },
+                new Mesa() { NumeroMesa = 6, Id = 6, Ocupada = false, Ativo = true },
+                new Mesa() { NumeroMesa = 7, Id = 7, Ocupada = false, Ativo = true }
             );
             
             

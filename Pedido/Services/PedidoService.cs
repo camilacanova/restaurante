@@ -29,7 +29,10 @@ namespace PedidoAPI.Services
         {
             var result = _postPedido.execute(entity);
             if (result.Success)
+            {
+                entity = result.Entities[0];
                 return repo.Create(entity);
+            }
             else
                 return result;
         }

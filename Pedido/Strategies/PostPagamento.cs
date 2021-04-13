@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using PedidoAPI.Data;
 using PedidoAPI.Model;
@@ -18,6 +19,7 @@ namespace PedidoAPI.Strategies
         public Result<Pagamento> execute(Pagamento entity)
         {
             var result = new Result<Pagamento>();
+            result.Entities = new List<Pagamento>();
             result.Messages = new List<string>();
             result.Success = true;
 
@@ -34,7 +36,11 @@ namespace PedidoAPI.Strategies
                 result.Success = false;
                 result.Messages.Add("Valor do pagamento diferente dos itens do pedido");
             }
-
+            
+            entity.Id = new Guid();
+            entity.Ativo = true;
+            result.Entities[0] = entity;
+            
             return result;
         }
     }

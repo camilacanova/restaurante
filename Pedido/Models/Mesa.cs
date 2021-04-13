@@ -9,5 +9,7 @@ namespace PedidoAPI.Model
     public class Mesa : BaseType
     {
         public int NumeroMesa { get; set; }
+
+        public bool Ocupada {get;set;}
     }
 }

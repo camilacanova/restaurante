@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using PedidoAPI.Model;
 using PedidoAPI.Util;
@@ -12,6 +13,7 @@ namespace PedidoAPI.Strategies
         public Result<ItemPedido> execute(ItemPedido entity)
         {
             var result = new Result<ItemPedido>();
+            result.Entities = new List<ItemPedido>();
             result.Messages = new List<string>();
             result.Success = true;
 
@@ -27,6 +29,10 @@ namespace PedidoAPI.Strategies
                 result.Success = false;
                 result.Messages.Add("É preciso adicionar um produto ao item");
             }
+
+            entity.Ativo = true;
+            entity.Id = new Guid();
+            result.Entities[0] = entity;
 
             return result;
         }
