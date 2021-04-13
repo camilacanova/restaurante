@@ -1,0 +1,46 @@
+﻿@model Carrinho
+@{
+    ViewData["Title"] = "Carrinho";
+}
+<section class="u-clearfix u-grey-10 u-section-2" id="sec-d588">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-1">Carrinho</h2>
+        <p />
+        <div class="u-expanded-width u-table u-table-responsive u-table-1">
+            <table class="u-table-entity">
+                <colgroup>
+                    <col width="5%">
+                    <col width="55%">
+                    <col width="20%">
+                    <col width="20%">
+                </colgroup>
+                <thead class="u-align-center u-black u-table-header u-table-header-1">
+                    <tr style="height: 56px;">
+                        @*<th class="u-align-left u-border-1 u-border-grey-30 u-table-cell">*</th>*@
+                        <th class="u-border-1 u-border-grey-30 u-table-cell u-table-cell-3">QUANTIDADE</th>
+                        <th class="u-border-1 u-border-grey-30 u-table-cell u-table-cell-2">PRODUTO</th>
+                        <th class="u-border-1 u-border-grey-30 u-table-cell u-table-cell-3">VALOR UNITARIO</th>
+                        <th class="u-border-1 u-border-grey-30 u-table-cell u-table-cell-3">VALOR TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody class="u-align-center u-table-body">
+                    @{
+                        foreach (var item in Model.Itens)
+                        {
+                            <tr style="height: 30px;">
+                                @*<td class="u-align-left u-border-1 u-border-grey-30 u-first-column u-table-cell">@item.ItemId</td>*@
+                                <td class="u-border-1 u-border-grey-30 u-table-cell">@item.Quantidade</td>
+                                <td class="u-border-1 u-border-grey-30 u-table-cell">@item.NomeItem</td>
+                                <td class="u-border-1 u-border-grey-30 u-table-cell">R$@item.Valor</td>
+                                <td class="u-border-1 u-border-grey-30 u-table-cell">R$@(item.Valor * item.Quantidade)</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        @Html.ActionLink("Realizar Pedido", "Pedido", "Pedido", new { @class = "u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1" })
+        @Html.ActionLink("Voltar ao cardápio", "ListaCardapios", "Cardapio", new { @class = "u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2" })
+
+    </div>
+</section>
