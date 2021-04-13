@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ClienteUI.Models
 {
     [Table("ItemCardapio")]
-    public class ItemCardapio : BaseEntity
+    public class ItemCardapio : BaseType
     {
         public string NomeItem { get; set; }
         //public List<Adicional> AdicionaisItem { get; set; }

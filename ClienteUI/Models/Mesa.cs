@@ -5,9 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClienteUI.Models
 {
-    [Table("StatusItem")]
-    public class StatusItem : BaseType
+    [Table("Mesa")]
+    public class Mesa : BaseType
     {
-        public string Descricao { get; set; }
+        public int NumeroMesa { get; set; }
+
+        public bool Ocupada {get;set;}
     }
 }

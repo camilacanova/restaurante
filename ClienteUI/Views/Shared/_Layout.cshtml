@@ -34,7 +34,8 @@
     <section class="u-align-center u-clearfix u-section-3" id="sec-e21c">
         <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
             <h3 class="u-text u-text-1">Precisa de ajuda?</h3>
-            <a href="#" class="u-border-0 u-btn u-button-style u-palette-2-base u-btn-1">CONSULTAR PEDIDOS</a>
+
+            @Html.ActionLink("CONSULTAR PEDIDOS", "MeusPedidos", "Pedido", new {  }, new { @class = "u-border-0 u-btn u-button-style u-palette-2-base u-btn-1" })
             <a href="#" class="u-border-0 u-btn u-button-style u-palette-2-base u-btn-2">CHAMAR GARÇOM</a>
         </div>
     </section>

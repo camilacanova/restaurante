@@ -48,7 +48,7 @@ namespace PedidoAPI.Controllers
             try
             {
                 Result<Pedido> result = _service.Read(new Pedido() { MesaId = mesa });
-                return CreatedAtAction("Get", result.Entities);
+                return CreatedAtAction("Get", result.Entities[0]);
             }
             catch (Exception ex)
             {

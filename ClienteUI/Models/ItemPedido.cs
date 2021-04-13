@@ -8,6 +8,8 @@ namespace ClienteUI.Models
     [Table("ItemPedido")]
     public class ItemPedido : BaseEntity
     {
+        [NotMapped]
+        public Produto Produto { get; set; }
         public int ProdutoId { get; set; }
         public int CardapioId { get; set; }
         public int Quantidade { get; set; }

@@ -1,4 +1,5 @@
-﻿@model Pedido
+﻿@using ClienteUI.Models.Enums;
+@model Pedido
 @{
     ViewData["Title"] = "Pedidos";
 }
@@ -29,16 +30,18 @@
                             <tr style="height: 30px;">
                                 @*<td class="u-align-left u-border-1 u-border-grey-30 u-first-column u-table-cell">@item.ItemId</td>*@
                                 <td class="u-border-1 u-border-grey-30 u-table-cell">@item.Quantidade</td>
-                                <td class="u-border-1 u-border-grey-30 u-table-cell">TODO</td>
-                                <td class="u-border-1 u-border-grey-30 u-table-cell">R$@item.StatusItem</td>
+                                <td class="u-border-1 u-border-grey-30 u-table-cell">@item.Produto.NomeItem</td>
+                                <td class="u-border-1 u-border-grey-30 u-table-cell">@item.StatusItem.Descricao</td>
+
                             </tr>
                         }
                     }
                 </tbody>
             </table>
         </div>
-        @Html.ActionLink("Realizar Pagamento", "Pagar", "Pagamento", new { @class = "u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1" })
-        @Html.ActionLink("Voltar ao cardápio", "ListaCardapios", "Cardapio", new { @class = "u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2" })
-
+        <div class="u-align-center u-clearfix u-section-3">
+            @Html.ActionLink("Selecionar mais", "ListaCardapios", "Cardapio", null, new { @class = "u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1" })
+            @Html.ActionLink("Realizar Pagamento", "Pagar", "Pagamento", null, new { @class = "u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2" })
+        </div>
     </div>
 </section>

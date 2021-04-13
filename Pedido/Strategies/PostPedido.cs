@@ -31,7 +31,7 @@ namespace PedidoAPI.Strategies
 
             entity.Id = new Guid();
             entity.Ativo = true;
-            result.Entities[0] = entity;
+            result.Entities.Add(entity);
 
             return result;
         }

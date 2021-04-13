@@ -21,7 +21,7 @@ namespace PedidoAPI.Strategies
                 {
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                    var response = client.GetAsync(string.Format("https://localhost:5002/api/cardapio/{0}/item_cardapio/{1}", entity.CardapioId, entity.Id)).Result;
+                    var response = client.GetAsync(string.Format("https://localhost:44308/api/cardapio/{0}/item_cardapio/{1}", entity.CardapioId, entity.Id)).Result;
 
                     if (response.IsSuccessStatusCode)
                     {

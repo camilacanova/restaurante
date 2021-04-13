@@ -1,20 +1,15 @@
-﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClienteUI.Models
 {
-    public class ItemCarrinho : BaseType
+    public class IncluiItemPedidoViewModel
     {
-        public string NomeItem { get; set; }
-
-        public decimal Valor { get; set; }
-
+        public int ProdutoId { get; set; }
         public int CardapioId { get; set; }
-
-        public int ItemId { get; set; }
-
         public int Quantidade { get; set; }
-
+        public int StatusItemId { get; set; }
     }
 }

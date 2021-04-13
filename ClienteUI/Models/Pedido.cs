@@ -12,10 +12,10 @@ namespace ClienteUI.Models
         public StatusPedido StatusPedido { get; set; }
         
         public int StatusPedidoId { get; set; }
-        //public Mesa Mesa { get; set; }
-        //[ForeignKey("Mesa")]
-        //public int MesaId { get; set; }
+        public Mesa Mesa { get; set; }
+        [ForeignKey("Mesa")]
+        public int MesaId { get; set; }
 
-        //public Pagamento Pagamento { get; set; }
+        public Pagamento Pagamento { get; set; }
     }
 }

@@ -5,9 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClienteUI.Models
 {
-    [Table("StatusItem")]
-    public class StatusItem : BaseType
+    public class IncluiItemPedidoUnicoViewModel: IncluiItemPedidoViewModel
     {
-        public string Descricao { get; set; }
+        public string pedidoId { get; set; }
     }
 }

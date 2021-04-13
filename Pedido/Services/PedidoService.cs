@@ -40,7 +40,7 @@ namespace PedidoAPI.Services
         public Result<Pedido> Read(Pedido entity)
         {
             var result = repo.Read(entity);
-            for (int i = 0; i < result.Entities.Count ; i++)
+            for (int i = 0; i < result.Entities.Count; i++)
             {
                 for (int j = 0; j < result.Entities[i].Itens.Count; j++)
                 {
