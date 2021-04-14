@@ -57,10 +57,14 @@ namespace CardapioUI.Controllers
                 pedido = response.Content.ReadAsAsync<Pedido>().Result;
             }
 
+            foreach(ItemPedido i in pedido.Itens)
+            {
+                i.StatusItem = null;
+            }
+
             ItemPedido item = pedido.Itens.FindLast(x => x.Id == idItem);
             item.StatusItemId++;
-            item.StatusItem.Id++;
-            item.StatusItem = null;
+
 
             //Atualiza o pedido
             client = new HttpClient();

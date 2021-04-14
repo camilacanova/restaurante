@@ -50,9 +50,9 @@
                                 {
                                     @Html.ActionLink("Evoluir | ", "Evoluir", new { idPedido = pedido.Id, idItem = itemPedido.Id })
                                     @*@Html.ActionLink("Cancelar", "Cancelar", new { idPedido = pedido.Id, idItem = itemPedido.ProdutoId })
-                                    <h6>|</h6>*@
+                                        <h6>|</h6>*@
                                 }
-                                @Html.ActionLink("Chamar Garçom", "Chamar Garçom", new { chamado = (int)EnumChamadoGarcom.Cozinha })
+                                @Html.ActionLink("Chamar Garçom", "VerPedidos", new { chamado = (int)EnumChamadoGarcom.Cozinha }, new { onclick = "alert('O garçom chegará em instantes!')" })
                             </td>
                         </tr>
                     }
