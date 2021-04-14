@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace ClienteUI.Models
+namespace CardapioUI.Models
 {
     [Table("Pedido")]
-    public class Pedido : BaseEntity
+    public class Pedido : BaseType
     {
         public List<ItemPedido> Itens { get; set; }
         public StatusPedido StatusPedido { get; set; }
@@ -16,10 +16,5 @@ namespace ClienteUI.Models
         public Mesa Mesa { get; set; }
         [ForeignKey("Mesa")]
         public int MesaId { get; set; }
-
-        public Pagamento Pagamento { get; set; }
-
-        [JsonIgnore]
-        public decimal ValorTotal { get; set; }
     }
 }

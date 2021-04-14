@@ -8,6 +8,6 @@ namespace PedidoAPI.Model.Enums
     {
         Aberto = 1,
         Encerrado = 2,
-        Pago = 2
+        Pago = 3
     }
 }

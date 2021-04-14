@@ -1,0 +1,31 @@
+﻿@using ClienteUI.Models.Enums;
+@model Pagamento
+@{
+    ViewData["Title"] = "Pagamento";
+}
+<section class="u-clearfix u-grey-10 u-section-2" id="sec-d588">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-1">Pagamento</h2>
+        <p />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Pagar">
+                    <div class="form-group">
+                        <h5>Valor</h5>
+                        @Html.DisplayTextFor(model => model.Valor)
+                    </div>
+                    <div class="form-group">
+                        <h5>Tipo de pagamento</h5>
+                        <select name="select">
+                            <option value="1">Cartão</option>
+                            <option value="2">Dinheiro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        @Html.ActionLink("Pagar", "Pagar", "Pagamento", new { valor = Model.Valor, pedidoId = Model.PedidoId }, new { @class = "u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2" })
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -26,7 +26,7 @@ namespace PedidoAPI.Data.Repositories
                     .Include(x => x.Pagamento)
                     .Include(i => i.Itens)
                     .ThenInclude(x => x.StatusItem)
-                    .Where(x => x.Id == entity.Id || (mesaId > 0 ? x.MesaId == mesaId : true)).FirstOrDefault();
+                    .Where(x => x.Id == entity.Id && (mesaId > 0 ? x.MesaId == mesaId : true)).FirstOrDefault();
                 Result<Pedido> result = new Result<Pedido>(true, item);
                 return result;
             }

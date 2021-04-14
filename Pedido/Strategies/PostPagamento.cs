@@ -13,10 +13,11 @@ namespace PedidoAPI.Strategies
     public class PostPagamento : IPostPagamento
     {
         private AbstractRepository<Pedido> repoPedido;
-        private AbstractTypeRepository<Mesa> repoMesa; 
+        private AbstractTypeRepository<Mesa> repoMesa;
         public PostPagamento(AbstractRepository<Pedido> repoPedido, AbstractTypeRepository<Mesa> repoMesa)
         {
             this.repoPedido = repoPedido;
+            this.repoMesa = repoMesa;
         }
         public Result<Pagamento> execute(Pagamento entity)
         {
@@ -25,12 +26,15 @@ namespace PedidoAPI.Strategies
             result.Messages = new List<string>();
             result.Success = true;
 
-            Pedido _pedido = repoPedido.Read(new Pedido() { Id = entity.PedidoId }).Entities[0];
+            Pedido _pedido = repoPedido.ReadWhere(x => x.Id == entity.PedidoId).Entities[0];
+            GetProdutoStrategy strategy = new GetProdutoStrategy();
 
             decimal valorItens = 0;
             _pedido.Itens.ForEach(delegate (ItemPedido i)
             {
-                valorItens += i.Produto.Valor * i.Quantidade;
+                Produto prod = strategy.execute(new Produto() { CardapioId = i.CardapioId, Id = i.ProdutoId }).Entities[0];
+
+                valorItens += prod.Valor * i.Quantidade;
             });
 
             ////validação de status dos itens de pedido
@@ -54,6 +58,11 @@ namespace PedidoAPI.Strategies
             var Mesa = _pedido.Mesa;
             Mesa.Ocupada = false;
             repoMesa.Update(Mesa);
+
+            //Encerra pedido
+            _pedido.StatusPedidoId = (int)EnumStatusPedido.Pago;
+            repoPedido.Update(_pedido);
+
 
             entity.Id = new Guid();
             entity.Ativo = true;

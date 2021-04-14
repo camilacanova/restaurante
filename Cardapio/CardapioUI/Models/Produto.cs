@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ClienteUI.Models
+namespace CardapioUI.Models
 {
     [NotMapped]
-    public class Produto : BaseType
+    public class Produto : BaseEntity
     {
         public string NomeItem { get; set; }
         public decimal Valor { get; set; }

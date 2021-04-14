@@ -28,7 +28,7 @@
             @Html.DisplayFor(model => model.Observacao)
         </dd>
     </dl>
-    @Html.ActionLink("Editar", "EditarCardapio", "Home", new { id = Model.Id })
+    @Html.ActionLink("Editar", "EditarCardapio", "Cardapio", new { id = Model.Id })
     <hr>
     <h4>Itens do Cardápio</h4>
     <hr />
@@ -81,5 +81,5 @@
 <div>
     @Html.ActionLink("Novo Item", "CriarItem", "ItemCardapio", new { idCardapio = Model.Id })
     <hr>
-    <a asp-action="Index">Voltar a lista de cardápios</a>
+    <a asp-action="VerCardapio">Voltar a lista de cardápios</a>
 </div>

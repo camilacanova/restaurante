@@ -37,9 +37,9 @@
                     @Html.DisplayFor(modelItem => item.Observacao)
                 </td>
                 <td>
-                    @Html.ActionLink("Detalhes", "DetalhesCardapio", "Home", new { id = item.Id }) |
-                    @Html.ActionLink("Editar", "EditarCardapio", "Home", new { id = item.Id }) |
-                    @Html.ActionLink("Excluir", "ExcluirCardapio", "Home", new { id = item.Id }) |
+                    @Html.ActionLink("Detalhes", "DetalhesCardapio", "Cardapio", new { id = item.Id }) |
+                    @Html.ActionLink("Editar", "EditarCardapio", "Cardapio", new { id = item.Id }) |
+                    @Html.ActionLink("Excluir", "ExcluirCardapio", "Cardapio", new { id = item.Id }) |
                 </td>
             </tr>
         }

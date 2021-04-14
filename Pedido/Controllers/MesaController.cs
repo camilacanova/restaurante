@@ -59,6 +59,21 @@ namespace PedidoAPI.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            try
+            {
+                Result<Mesa> result = _service.ReadAll(new Mesa());
+                return CreatedAtAction("Get", result.Entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogTrace(ex.Message);
+                return BadRequest();
+            }
+        }
+
         [HttpPatch]
         public IActionResult Patch(Mesa Mesa)
         {

@@ -1,0 +1,62 @@
+﻿@using CardapioUI.Models.Enums;
+@model IEnumerable<CardapioUI.Models.Pedido>
+
+@{
+    ViewData["Title"] = "VerPedidos";
+}
+
+<h1>Pedidos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Mesa
+            </th>
+            <th>
+                Produto
+            </th>
+            <th>
+                Observação
+            </th>
+            <th>
+                Situação
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model != null)
+                foreach (Pedido pedido in Model)
+                {
+                    foreach (ItemPedido itemPedido in pedido.Itens)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => pedido.MesaId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => itemPedido.Produto.NomeItem)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => itemPedido.Produto.Observacao)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => itemPedido.StatusItem.Descricao)
+                            </td>
+                            <td>
+                                @if (itemPedido.StatusItemId != (int)EnumStatusItem.Entregue)
+                                {
+                                    @Html.ActionLink("Evoluir | ", "Evoluir", new { idPedido = pedido.Id, idItem = itemPedido.Id })
+                                    @*@Html.ActionLink("Cancelar", "Cancelar", new { idPedido = pedido.Id, idItem = itemPedido.ProdutoId })
+                                    <h6>|</h6>*@
+                                }
+                                @Html.ActionLink("Chamar Garçom", "Chamar Garçom", new { chamado = (int)EnumChamadoGarcom.Cozinha })
+                            </td>
+                        </tr>
+                    }
+                }
+        }
+    </tbody>
+</table>

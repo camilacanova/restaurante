@@ -43,13 +43,20 @@ namespace PedidoAPI.Controllers
             }
         }
 
+
         [HttpGet]
         public IActionResult Get([FromQuery] int mesa)
         {
             try
             {
-                Result<Pedido> result = _service.ReadWhere(x=> x.MesaId == mesa && x.StatusPedidoId != ((int)EnumStatusPedido.Pago));
-                return CreatedAtAction("Get", result.Entities[0]);
+                Result<Pedido> result = _service.ReadWhere(x => (x.MesaId == mesa || mesa == 0) && x.StatusPedidoId != ((int)EnumStatusPedido.Pago));
+                if (result != null && result.Entities != null && result.Entities.Count > 0)
+                    if (mesa == 0)
+                        return CreatedAtAction("Get", result.Entities);
+                    else
+                        return CreatedAtAction("Get", result.Entities[0]);
+                else
+                    return CreatedAtAction("Get", null);
             }
             catch (Exception ex)
             {
@@ -65,7 +72,7 @@ namespace PedidoAPI.Controllers
             try
             {
                 Result<Pedido> result = _service.Read(new Pedido() { Id = id_pedido });
-                return CreatedAtAction("Get", result.Entities);
+                return CreatedAtAction("Get", result.Entities[0]);
             }
             catch (Exception ex)
             {
