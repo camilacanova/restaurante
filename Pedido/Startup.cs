@@ -77,7 +77,12 @@ namespace PedidoAPI
             services.AddTransient<IPostPagamento, PostPagamento>();
 
             services.AddHttpClient();
-            services.AddCors();
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             services.AddControllers().AddNewtonsoftJson(
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -96,6 +101,8 @@ namespace PedidoAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
+            app.UseCors("MyPolicy");
 
             app.UseAuthorization();
 

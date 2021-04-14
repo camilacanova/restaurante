@@ -38,7 +38,12 @@ namespace CardapioService
                 });
             });
 
-            services.AddCors();
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             services.AddControllers().AddNewtonsoftJson(
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -63,7 +68,7 @@ namespace CardapioService
                 endpoints.MapControllers();
             });
 
-            app.UseCors(option => option.AllowAnyOrigin());
+            app.UseCors("MyPolicy");
 
             app.UseSwagger();
             app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "Cardapio Service"));
