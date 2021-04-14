@@ -94,7 +94,7 @@ namespace PedidoAPI.Data
             }
         }
 
-        public Result<T> ReadWhere(Expression<Func<T, bool>> predicate)
+        public virtual Result<T> ReadWhere(Expression<Func<T, bool>> predicate)
         {
             try
             {

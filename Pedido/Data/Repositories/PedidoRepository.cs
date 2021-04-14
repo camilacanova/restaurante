@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using PedidoAPI.Data;
 using PedidoAPI.Model;
@@ -47,6 +48,27 @@ namespace PedidoAPI.Data.Repositories
                     .Include(i => i.Itens)
                     .ThenInclude(x => x.StatusItem)
                     .OrderBy(x => x.Id).ToList();
+                Result<Pedido> result = new Result<Pedido>(true, itens);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public override Result<Pedido> ReadWhere(Expression<Func<Pedido, bool>> predicate)
+        {
+            try
+            {
+                List<Pedido> itens = context.Pedidos
+                    .Include(x => x.Mesa)
+                    .Include(x => x.StatusPedido)
+                    .Include(x => x.Pagamento)
+                    .Include(i => i.Itens)
+                    .ThenInclude(x => x.StatusItem)
+                    .Where(predicate).ToList();
                 Result<Pedido> result = new Result<Pedido>(true, itens);
                 return result;
             }

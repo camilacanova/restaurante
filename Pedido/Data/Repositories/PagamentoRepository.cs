@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using PedidoAPI.Data;
 using PedidoAPI.Model;
@@ -20,7 +21,7 @@ namespace PedidoAPI.Data.Repositories
             {
                 Pagamento item = context.Set<Pagamento>()
                     .Include(x => x.TipoPagamento)
-                    .Where(x=> x.Id == entity.Id).FirstOrDefault();
+                    .Where(x => x.Id == entity.Id).FirstOrDefault();
                 Result<Pagamento> result = new Result<Pagamento>(true, item);
                 return result;
             }
@@ -30,7 +31,7 @@ namespace PedidoAPI.Data.Repositories
             }
         }
 
-         public override Result<Pagamento> ReadAll(Pagamento entity)
+        public override Result<Pagamento> ReadAll(Pagamento entity)
         {
             try
             {
@@ -42,6 +43,23 @@ namespace PedidoAPI.Data.Repositories
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+        }
+
+        public override Result<Pagamento> ReadWhere(Expression<Func<Pagamento, bool>> predicate)
+        {
+            try
+            {
+                List<Pagamento> itens = context.Pagamentos
+                   .Include(x => x.TipoPagamento)
+                    .Where(predicate).ToList();
+                Result<Pagamento> result = new Result<Pagamento>(true, itens);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
                 throw ex;
             }
         }
