@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PedidoAPI.Model;
 using PedidoAPI.Services;
+using PedidoAPI.Util;
 
 namespace PedidoAPI.Controllers
 {
@@ -26,12 +27,10 @@ namespace PedidoAPI.Controllers
         {
             try
             {
-                //var result = facade.Create(cardapio);
-                //if (result.Success)
-                //return CreatedAtAction("CreateCardapio", new { Id = result.Entities[0].Id });
-                //return BadRequest(result.Messages);
-
-                return CreatedAtAction("Post", new { Id = 0 });
+                var result = _service.Create(Pagamento);
+                if (result.Success)
+                    return CreatedAtAction("Post", new { Id = result.Entities[0].Id });
+                return BadRequest(result.Messages);
             }
             catch (Exception ex)
             {
@@ -46,13 +45,8 @@ namespace PedidoAPI.Controllers
         {
             try
             {
-                // var result = facade.Read(new Cardapio() { Id = idCardapio });
-                // if (result != null && result.Entities != null && result.Entities.Count > 0)
-                //     return CreatedAtAction("ReadCardapio", result.Entities[0]);
-                // else
-                //     return CreatedAtAction("ReadCardapio", new { });
-
-                return CreatedAtAction("Get", new List<Pagamento>() { new Pagamento() { } });
+                Result<Pagamento> result = _service.Read(new Pagamento() { Id = id });
+                return CreatedAtAction("Get", result.Entities[0]);
             }
             catch (Exception ex)
             {
