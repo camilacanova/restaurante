@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using PedidoAPI.Data;
 using PedidoAPI.Model;
+using PedidoAPI.Model.Enums;
 using PedidoAPI.Util;
 
 namespace PedidoAPI.Strategies
@@ -11,10 +12,11 @@ namespace PedidoAPI.Strategies
     }
     public class PostPagamento : IPostPagamento
     {
-        private AbstractRepository<Pedido> repo;
-        public PostPagamento(AbstractRepository<Pedido> repo)
+        private AbstractRepository<Pedido> repoPedido;
+        private AbstractTypeRepository<Mesa> repoMesa; 
+        public PostPagamento(AbstractRepository<Pedido> repoPedido, AbstractTypeRepository<Mesa> repoMesa)
         {
-            this.repo = repo;
+            this.repoPedido = repoPedido;
         }
         public Result<Pagamento> execute(Pagamento entity)
         {
@@ -23,20 +25,36 @@ namespace PedidoAPI.Strategies
             result.Messages = new List<string>();
             result.Success = true;
 
-            Pedido _pedido = repo.Read(new Pedido() { Id = entity.PedidoId }).Entities[0];
+            Pedido _pedido = repoPedido.Read(new Pedido() { Id = entity.PedidoId }).Entities[0];
 
             decimal valorItens = 0;
             _pedido.Itens.ForEach(delegate (ItemPedido i)
             {
                 valorItens += i.Produto.Valor * i.Quantidade;
             });
-            
+
+            ////validação de status dos itens de pedido
+            // foreach (ItemPedido item in _pedido.Itens)
+            // {
+            //     if (item.StatusItemId != (int)EnumStatusItem.Entregue)
+            //     {
+            //         result.Success = false;
+            //         result.Messages.Add("Valor do pagamento diferente dos itens do pedido");
+            //         break;
+            //     }
+            // }
+
             if (entity.Valor != valorItens)
             {
                 result.Success = false;
                 result.Messages.Add("Valor do pagamento diferente dos itens do pedido");
             }
-            
+
+            //atualizar mesa
+            var Mesa = _pedido.Mesa;
+            Mesa.Ocupada = false;
+            repoMesa.Update(Mesa);
+
             entity.Id = new Guid();
             entity.Ativo = true;
             result.Entities.Add(entity);

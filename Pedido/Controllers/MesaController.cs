@@ -13,25 +13,25 @@ using PedidoAPI.Util;
 namespace PedidoAPI.Controllers
 {
     [ApiController]
-    [Route("api/pedido")]
-    public class PedidoController : ControllerBase
+    [Route("api/mesa")]
+    public class MesaController : ControllerBase
     {
 
-        private readonly ILogger<PedidoController> _logger;
-        IService<Pedido> _service;
+        private readonly ILogger<MesaController> _logger;
+        ITypeService<Mesa> _service;
 
-        public PedidoController(ILogger<PedidoController> logger, IService<Pedido> service)
+        public MesaController(ILogger<MesaController> logger, ITypeService<Mesa> service)
         {
             _logger = logger;
             _service = service;
         }
 
         [HttpPost]
-        public IActionResult Post(Pedido pedido)
+        public IActionResult Post(Mesa Mesa)
         {
             try
             {
-                var result = _service.Create(pedido);
+                var result = _service.Create(Mesa);
                 if (result.Success)
                     return CreatedAtAction("Post", new { Id = result.Entities[0].Id });
                 return BadRequest(result.Messages);
@@ -44,27 +44,12 @@ namespace PedidoAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] int mesa)
+        [Route("{id_mesa}")]
+        public IActionResult Get([FromRoute] int id_mesa)
         {
             try
             {
-                Result<Pedido> result = _service.ReadWhere(x=> x.MesaId == mesa && x.StatusPedidoId != ((int)EnumStatusPedido.Pago));
-                return CreatedAtAction("Get", result.Entities[0]);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogTrace(ex.Message);
-                return BadRequest();
-            }
-        }
-
-        [HttpGet]
-        [Route("{id_pedido}")]
-        public IActionResult Get([FromRoute] Guid id_pedido)
-        {
-            try
-            {
-                Result<Pedido> result = _service.Read(new Pedido() { Id = id_pedido });
+                Result<Mesa> result = _service.Read(new Mesa() { Id = id_mesa });
                 return CreatedAtAction("Get", result.Entities);
             }
             catch (Exception ex)
@@ -75,12 +60,12 @@ namespace PedidoAPI.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Patch(Pedido pedido)
+        public IActionResult Patch(Mesa Mesa)
         {
             try
             {
 
-                var result = _service.Update(pedido);
+                var result = _service.Update(Mesa);
                 if (result.Success)
                     return CreatedAtAction("Patch", result.Entities[0]);
 

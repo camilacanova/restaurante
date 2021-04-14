@@ -59,10 +59,14 @@ namespace PedidoAPI
             services.AddTransient<IRepository<Pagamento>, AbstractRepository<Pagamento>>();
             services.AddTransient<AbstractRepository<Pagamento>, PagamentoRepository>();
 
+            services.AddTransient<ITypeRepository<Mesa>, AbstractTypeRepository<Mesa>>();
+            services.AddTransient<AbstractTypeRepository<Mesa>, MesaRepository>();
+
             //services
             services.AddTransient<IService<Pedido>, PedidoService>();
             services.AddTransient<IService<ItemPedido>, ItemPedidoService>();
             services.AddTransient<IService<Pagamento>, PagamentoService>();
+            services.AddTransient<ITypeService<Mesa>, MesaService>();
 
             //strategies
             services.AddTransient<IGetProdutoStrategy, GetProdutoStrategy>();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using PedidoAPI.Data;
 using PedidoAPI.Data.Repositories;
 using PedidoAPI.Model;
@@ -53,6 +54,18 @@ namespace PedidoAPI.Services
         public Result<ItemPedido> ReadAll(ItemPedido entity)
         {
             var result = repo.ReadAll(entity);
+            for (int i = 0; i < result.Entities.Count; i++)
+            {
+                var r = getItemPedido.execute(result.Entities[i]);
+                if (r.Success)
+                    result.Entities[i] = r.Entities[0];
+            }
+            return result;
+        }
+
+        public Result<ItemPedido> ReadWhere(Expression<Func<ItemPedido, bool>> predicate)
+        {
+            var result = repo.ReadWhere(predicate);
             for (int i = 0; i < result.Entities.Count; i++)
             {
                 var r = getItemPedido.execute(result.Entities[i]);

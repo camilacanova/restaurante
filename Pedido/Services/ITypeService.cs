@@ -4,8 +4,8 @@ using PedidoAPI.Util;
 
 namespace PedidoAPI.Services
 {
-    public interface IService<T>
-        where T : BaseEntity
+    public interface ITypeService<T>
+        where T : BaseType
     {
         Result<T> Create(T entity);
         Result<T> ReadAll(T entity);

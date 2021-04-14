@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace PedidoAPI.Data
 {
-    public class AbstractRepository<T> : IRepository<T> where T : BaseEntity
+    public class AbstractTypeRepository<T> : ITypeRepository<T> where T : BaseType
     {
-        public PedidoContext context { get; set; }
-        public AbstractRepository(PedidoContext context)
+        public PedidoContext context  { get; set; }
+        public AbstractTypeRepository(PedidoContext context)
         {
             this.context = context;
         }
-
+        
         public virtual Result<T> Create(T entity)
         {
             try
@@ -63,7 +63,7 @@ namespace PedidoAPI.Data
             }
         }
 
-        public virtual Result<T> ReadAll(T entity)
+        public virtual Result<T>  ReadAll(T entity)
         {
             try
             {

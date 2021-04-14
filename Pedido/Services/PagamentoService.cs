@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using PedidoAPI.Data;
 using PedidoAPI.Data.Repositories;
 using PedidoAPI.Model;
@@ -39,6 +40,11 @@ namespace PedidoAPI.Services
         public Result<Pagamento> ReadAll(Pagamento entity)
         {
             return repo.ReadAll(entity);
+        }
+
+        public Result<Pagamento> ReadWhere(Expression<Func<Pagamento, bool>> predicate)
+        {
+            return repo.ReadWhere(predicate);
         }
 
         public Result<Pagamento> Update(Pagamento entity)
